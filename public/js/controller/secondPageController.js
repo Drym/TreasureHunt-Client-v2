@@ -2,7 +2,8 @@ app.controller("secondCtrl", function($scope) {
 
     var marker;
 
-    $scope.GPS = function () {
+    $scope.GPS = GPSFunc;
+    function GPSFunc () {
 
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(function (position) {
@@ -21,7 +22,8 @@ app.controller("secondCtrl", function($scope) {
         }
     }
 
-    $scope.googleMap = function () {
+    $scope.googleMap = googleMapFunc;
+    function googleMapFunc() {
 
         var myLatLng = {lat: 0, lng: 0};
 
@@ -44,8 +46,8 @@ app.controller("secondCtrl", function($scope) {
         });
     }
 
-    $scope.googleMap();
-    $scope.GPS();
+    googleMapFunc();
+    GPSFunc();
 
 });
 
