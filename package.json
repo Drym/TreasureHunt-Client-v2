@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "bower install",
-    "prestart": "npm install",
+    "postinstall": "./node_modules/bower/bin/bower install",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -14,6 +13,7 @@
     "express": "~4.14.0",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "bower": "^1.8.0"
   }
 }
