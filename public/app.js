@@ -19,7 +19,4 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 	$stateProvider.state(firstPageState);
 	$stateProvider.state(secondPageState);
 	$urlRouterProvider.otherwise('/');
-
-	// use the HTML5 History API
-	$locationProvider.html5Mode(true);
 })
