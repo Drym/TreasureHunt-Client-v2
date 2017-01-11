@@ -1,0 +1,11 @@
+/* Nav Bar */
+.navbar-brand img {
+    position: relative;
+    padding-right: 5px;
+    width: 45px;
+}
+
+span.logo {
+    position: relative;
+    top: -8px;
+}
