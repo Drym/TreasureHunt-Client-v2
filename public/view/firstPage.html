@@ -7,18 +7,18 @@
         <div class="form-group">
             <label class="col-md-3 control-label">Pseudo</label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="pseudo" placeholder="Votre pseudo...">
+                <input type="text" class="form-control" required="required" id="pseudo" placeholder="Votre pseudo...">
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-3 control-label">Équipe</label>
             <div class="col-md-9">
-                <input type="text" class="form-control" id="team" placeholder="Votre équipe...">
+                <input type="text" class="form-control" required="required" id="team" placeholder="Votre équipe...">
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-3 col-md-9 text-center">
-                <a href="#" type="submit" class="btn btn-default">Envoyer</a>
+                <input type="submit" ng-click="submit()" class="btn btn-default" value="Envoyer"/>
             </div>
         </div>
     </form>
