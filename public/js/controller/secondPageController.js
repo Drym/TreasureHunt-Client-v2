@@ -1,6 +1,8 @@
 app.controller("secondCtrl", function($scope) {
 
     var marker;
+    var circleCenter = {lat: 43, lng: 7};
+    var circleRadius = 50000;
 
     $scope.GPS = GPSFunc;
     function GPSFunc () {
@@ -14,6 +16,13 @@ app.controller("secondCtrl", function($scope) {
                     marker.setPosition(myLatLng);
                     //Map center
                     map.setCenter(myLatLng);
+
+                    var distance = distanceFunc(myLatLng.lat, myLatLng.lng, circleCenter.lat, circleCenter.lng);
+                    console.log(distance);
+
+                    if(distance < circleRadius / 1000) {
+                        console.log("Vous etes dans la zone");
+                    }
                 },
                function (error) {
                     console.log(error);
@@ -46,9 +55,48 @@ app.controller("secondCtrl", function($scope) {
         });
     }
 
+    $scope.addCircle = addCircleFunc;
+    function addCircleFunc() {
+        var cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: circleCenter,
+            radius: circleRadius
+        });
+    }
+
     googleMapFunc();
     GPSFunc();
+    addCircleFunc();
 
+
+    /**
+     * Distance entre 2 coordonnées en km
+     * @param lat_a
+     * @param lon_a
+     * @param lat_b
+     * @param lon_b
+     * @returns {number}
+     */
+    function distanceFunc(lat_a, lon_a, lat_b, lon_b)  {
+        var a = Math.PI / 180;
+        var lat1 = lat_a * a;
+        var lat2 = lat_b * a;
+        var lon1 = lon_a * a;
+        var lon2 = lon_b * a;
+        var t1 = Math.sin(lat1) * Math.sin(lat2);
+        var t2 = Math.cos(lat1) * Math.cos(lat2);
+        var t3 = Math.cos(lon1 - lon2);
+        var t4 = t2 * t3;
+        var t5 = t1 + t4;
+        var rad_dist = Math.atan(-t5/Math.sqrt(-t5 * t5 +1)) + 2 * Math.atan(1);
+
+        return (rad_dist * 3437.74677 * 1.1508) * 1.6093470878864446;
+    }
 });
 
 
