@@ -9,3 +9,9 @@ span.logo {
     position: relative;
     top: -8px;
 }
+
+/* Map */
+div#map {
+    width: 100%;
+    height: calc(100vh - 100px);
+}
