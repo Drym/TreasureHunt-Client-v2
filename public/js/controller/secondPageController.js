@@ -1,8 +1,10 @@
-app.controller("secondCtrl", function($scope) {
+app.controller("secondCtrl", function($scope, $http) {
 
     var marker;
     var circleCenter = {lat: 43, lng: 7};
     var circleRadius = 50000;
+
+    var IP = '10.212.99.100:8080';
 
     $scope.GPS = GPSFunc;
     function GPSFunc () {
@@ -97,6 +99,20 @@ app.controller("secondCtrl", function($scope) {
 
         return (rad_dist * 3437.74677 * 1.1508) * 1.6093470878864446;
     }
+
+
+    $http({
+        method: 'GET',
+        url: 'http://'+IP+'/areas'
+    }).then(function successCallback(response) {
+        // this callback will be called asynchronously
+        // when the response is available
+        console.log(response);
+    }, function errorCallback(response) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        console.log(response);
+    });
 });
 
 
