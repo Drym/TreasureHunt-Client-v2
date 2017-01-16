@@ -15,3 +15,20 @@ div#map {
     width: 100%;
     height: calc(100vh - 100px);
 }
+
+#modalButton {
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-bottom: 0px;
+    padding-right: 5px;
+    position: absolute;
+
+    bottom: 40px;
+    left: 20px;
+    border-radius: 100px;
+    height: 40px
+}
+
+.glyphicon-question-sign:before {
+    font-size: 30px;
+}
