@@ -21,12 +21,11 @@ div#map {
     padding-left: 5px;
     padding-bottom: 0px;
     padding-right: 5px;
-    position: absolute;
-
-    bottom: 40px;
-    left: 20px;
+    position: relative;
+    bottom: 70px;
+    left: 15px;
     border-radius: 100px;
-    height: 40px
+    height: 40px;
 }
 
 .glyphicon-question-sign:before {
