@@ -14,7 +14,7 @@ app.controller("secondCtrl", function($scope, $http) {
 
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(function (position) {
-                    console.log(position);
+                    console.log('latitude : ' + position.coords.latitude);
                     // TODO : Envoyer notre position au serveur
 
                     //Marker
@@ -110,7 +110,7 @@ app.controller("secondCtrl", function($scope, $http) {
         // this callback will be called asynchronously
         // when the response is available
         console.log(response);
-        var json = JSON.parse(response);
+        // var json = JSON.parse(response);
 
     }, function errorCallback(response) {
         // called asynchronously if an error occurs
