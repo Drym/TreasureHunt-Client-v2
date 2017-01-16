@@ -1,1 +1,46 @@
 <div id="map"></div>
+<a href="" data-toggle="modal" data-target="#enigmaModal">Yolo modal open link</a>
+<!-- MODALS -->
+<!-- ENIGMA -->
+<div class="modal fade" id="enigmaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="myModalLabel">Enigme</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="text-justify">
+                            Blabla de l'enigme tout ca tout ca. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate urna luctus quam fringilla, non vulputate orci tincidunt. Integer mi nibh, tincidunt in congue et, faucibus quis enim. Duis facilisis ante vitae porta sodales. Suspendisse sed lacus volutpat dolor condimentum euismod. Integer vel tellus sed dui dictum molestie
+                        </p>
+                        <img class="img-responsive" src="http://www.lunerouge.org/textures/wall/LRwall0012.jpg"/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form class="form-horizontal col-xs-12">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label pull-left">Réponse</label>
+                        <div class="col-md-9">
+                            <textarea style="resize: vertical" class="form-control" id="answer" placeholder="Votre réponse..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label pull-left">Photo</label>
+                        <div class="col-md-9">
+                            <input type="file" id="photoAnswer">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div class="col-xs-12 text-center">
+                            <input type="submit" class="btn btn-default" value="Envoyer" data-toggle="modal" data-target="#enigmaModal"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

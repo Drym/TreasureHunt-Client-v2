@@ -4,9 +4,12 @@ app.controller("secondCtrl", function($scope, $http) {
     var circleCenter = {lat: 43, lng: 7};
     var circleRadius = 50000;
 
-    var IP = '10.212.116.103:8080';
+    var IP = '10.212.116.203:8080';
 
     $scope.GPS = GPSFunc;
+    $scope.googleMap = googleMapFunc;
+    $scope.addCircle = addCircleFunc;
+
     function GPSFunc () {
 
         if (navigator.geolocation) {
@@ -34,7 +37,6 @@ app.controller("secondCtrl", function($scope, $http) {
         }
     }
 
-    $scope.googleMap = googleMapFunc;
     function googleMapFunc() {
 
         var myLatLng = {lat: 0, lng: 0};
@@ -58,7 +60,6 @@ app.controller("secondCtrl", function($scope, $http) {
         });
     }
 
-    $scope.addCircle = addCircleFunc;
     function addCircleFunc() {
         var cityCircle = new google.maps.Circle({
             strokeColor: '#FF0000',
@@ -109,6 +110,8 @@ app.controller("secondCtrl", function($scope, $http) {
         // this callback will be called asynchronously
         // when the response is available
         console.log(response);
+        var json = JSON.parse(response);
+
     }, function errorCallback(response) {
         // called asynchronously if an error occurs
         // or server returns response with an error status.
