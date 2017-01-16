@@ -4,7 +4,7 @@ app.controller("secondCtrl", function($scope, $http) {
     var circleCenter = {lat: 43, lng: 7};
     var circleRadius = 50000;
 
-    var IP = '10.212.99.100:8080';
+    var IP = '10.212.116.103:8080';
 
     $scope.GPS = GPSFunc;
     function GPSFunc () {
@@ -12,6 +12,7 @@ app.controller("secondCtrl", function($scope, $http) {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(function (position) {
                     console.log(position);
+                    // TODO : Envoyer notre position au serveur
 
                     //Marker
                     var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};

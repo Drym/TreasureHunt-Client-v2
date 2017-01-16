@@ -10,6 +10,8 @@
 	<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 	<!-- App.js -->
 	<script src="app.js"></script>
+	<!-- Factory -->
+	<script src="js/factory/factory.js"></script>
 	<!-- Controller -->
 	<script src="js/controller/firstPageController.js"></script>
 	<script src="js/controller/secondPageController.js"></script>
@@ -23,9 +25,11 @@
 	<link rel="icon" href="favicon.ico" />
 	<!-- get gmap API -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAC-DcSsCyzZBKDOZk0yOk7ec_TJLuaz_8&language=fr" type="text/javascript"></script>
+    <!-- Socket io -->
+    <script type="text/javascript" src="bower_components/socket.io-client/dist/socket.io.min.js"></script>
 </head>
 
-<body ng-app="myApp">
+<body ng-app="myApp" ng-controller="firstCtrl">
 	<div class="header">
 		<div class="navbar navbar-default">
 			<div class="container">
@@ -39,7 +43,7 @@
 						<span class="icon-bar"></span>
 					</button>
 
-					<a class="navbar-brand" ui-sref="firstPageState"><span class="logo"><img alt="Brand" src="favicon.ico">Nom du bordel</span></a>
+					<a class="navbar-brand" ui-sref="firstPageState"><span class="logo"><img alt="Brand" src="favicon.ico">Treasure HP</span></a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="js-navbar-collapse">
@@ -47,8 +51,7 @@
 					<ul class="nav navbar-nav">
 						<!-- TODO fix class="active" -->
 						<li ui-sref-active="active"><a ui-sref="firstPageState">Accueil</a></li>
-						<li ui-sref-active="active"><a ui-sref="secondPageState">Nom du menu</a></li>
-						<li><a>Nom du menu</a></li>
+						<li ui-sref-active="active"><a ui-sref="secondPageState" ng-show="socketFactory.isConnected">Carte</a></li>
 					</ul>
 				</div>
 			</div>
