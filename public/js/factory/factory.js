@@ -37,10 +37,10 @@ app.factory('socketFactory', function($rootScope, $state){
 	});
 
 	socket.on('areas', function(data) {
-		console.log('areas : ' + JSON.stringify(data));
 
-		socketFactory.areas = data;
-	});
+		console.log('areas : ' + JSON.stringify(data));
+        $rootScope.$broadcast('areas',  JSON.parse(JSON.stringify(data)));
+	 });
 
 	socket.on('response', function(data) {
 		console.log('response : ' + data); // OK ou KO
