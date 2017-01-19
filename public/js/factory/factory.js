@@ -1,4 +1,4 @@
-app.factory('socketFactory', function($rootScope){
+app.factory('socketFactory', function($rootScope, $state){
 	var socketFactory = {};
 
 	socketFactory.isConnected = false;
@@ -19,6 +19,10 @@ app.factory('socketFactory', function($rootScope){
 		socket.emit('sendAnswer', answer)
 	};
 
+	socketFactory.askClue = function(enigme){
+		socket.emit('askClue', enigme);
+	}
+
 	socket.on('connexion', function(isConnected) {
 		socketFactory.isConnected = isConnected;
 	})
@@ -35,11 +39,12 @@ app.factory('socketFactory', function($rootScope){
 	});
 
 	socket.on('response', function(data) {
-		console.log('response : ' + data); //ok ou ko
+		console.log('response : ' + data); // OK ou KO
 
 		if(data == "ok") {
 			$rootScope.$broadcast('response-ok');
 			socketFactory.isConnected = false;
+			$state.go('secondPageState');
 		}
 	});
 
