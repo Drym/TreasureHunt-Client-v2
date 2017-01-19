@@ -1,4 +1,4 @@
-app.controller("secondCtrl", function($scope, socketFactory) {
+app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
 
     var marker;
     var circleCenter = {lat: 43, lng: 7};
@@ -18,9 +18,9 @@ app.controller("secondCtrl", function($scope, socketFactory) {
                     console.log('latitude : ' + position.coords.latitude);
                     // TODO : Envoyer notre position au serveur
 
-                    if(socketFactory.isConnected) {
+                    //if(socketFactory.isConnected) {
                         socketFactory.sendPosition(position);
-                    }
+                    //}
 
                     //Marker
                     var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
@@ -139,13 +139,25 @@ app.controller("secondCtrl", function($scope, socketFactory) {
 
     function sendAnswer() {
 
-        console.log("AAAA");
-        console.log($scope.answer);
-        var file = document.getElementById('photoAnswer');
-        console.log(file);
+        //text area
+        if($scope.answer) {
+            console.log($scope.answer);
+        }
 
-        //socketFactory.sendAnswer();
+        //Photo
+        var file = document.forms['form']['photoAnswer'].files[0];
+        if(file) {
+            console.log(file.name);
+        }
+
+        socketFactory.sendAnswer($scope.answer, file);
     }
+
+
+    $rootScope.$on('areas', function (data) {
+        console.log( JSON.stringify(data));
+        //todo afficher les areas
+    })
 });
 
 

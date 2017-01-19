@@ -10,9 +10,10 @@ app.factory('socketFactory', function($rootScope){
 		socket.emit('newUser', {'name' : name, 'team' : team});
 	};
 
-	socketFactory.sendPosition = function(position) {
-		socket.emit('sendPosition', position);
-	};
+    socketFactory.sendPosition = function(position) {
+	 	console.log('sendPosition');
+	 	socket.emit('sendPosition', position);
+    };
 
 	socketFactory.sendAnswer = function(answer) {
 		//socketFactory.isEnigme
@@ -31,8 +32,8 @@ app.factory('socketFactory', function($rootScope){
 	socket.on('areas', function(data) {
 		console.log('areas : ' + JSON.stringify(data));
 
-		socketFactory.areas = data;
-	});
+		 $rootScope.$broadcast('areas', data);
+	 });
 
 	socket.on('response', function(data) {
 		console.log('response : ' + data); //ok ou ko
