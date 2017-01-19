@@ -44,6 +44,12 @@ div#map {
     width: 50%;
 }
 
+#indice {
+    position: relative;
+    top: 6px;
+    display: none;
+}
+
 .img-fullscreen {
     border: 10px solid red;
     width: 100vw;

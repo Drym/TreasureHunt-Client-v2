@@ -7,6 +7,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
 
     //$scope functions
     $scope.sendAnswer = sendAnswer;
+    $scope.askClue = askClue;
 
     //Fonctions appelées au lancement
     googleMapInit();
@@ -142,13 +143,23 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         //File (photo)
         var file = document.forms['form']['photoAnswer'].files[0];
         if(file) {
-            console.log("Answer, file : "+file);
+            console.log("Answer, file : "+file); //TODO réussir à récupérer la photo
             $scope.file = file;
         }
 
         //Envoie au serveur la réponse
         socketFactory.sendAnswer($scope.answer, file);
         //TODO Vérifier la réponse du serveur et informer l'utilisateur
+    }
+
+    /**
+     * Demande un indice
+     */
+    function askClue() {
+        socketFactory.askClue();
+        //TODO afficher la réponse
+
+        $('#indice').show();
     }
 
     //============================================================================

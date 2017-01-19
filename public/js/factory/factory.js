@@ -85,7 +85,7 @@ app.factory('socketFactory', function($rootScope, $state){
     /**
      * Lorsque l'on recoit la confirmation de connexion
      */
-	socket.on('response', function(data) {
+	socket.on('response', function(data) { //TODO changer la clef 'response' ?
         console.log("Socket on : response");
 
 		if(data == "ok") { // OK ou KO
