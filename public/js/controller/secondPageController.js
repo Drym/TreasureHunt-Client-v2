@@ -4,8 +4,6 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     var circleCenter = {lat: 43, lng: 7};
     var circleRadius = 50000;
 
-    //var IP = '10.212.116.203:8080';
-
     $scope.GPS = GPSFunc;
     $scope.googleMap = googleMapFunc;
     $scope.addCircle = addCircleFunc;
@@ -16,11 +14,11 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         if (navigator.geolocation) {
             navigator.geolocation.watchPosition(function (position) {
                     console.log('latitude : ' + position.coords.latitude);
-                    // TODO : Envoyer notre position au serveur
+                    console.log('longitude : ' + position.coords.longitude);
 
-                    //if(socketFactory.isConnected) {
-                        socketFactory.sendPosition(position);
-                    //}
+                    if(socketFactory.isConnected) {
+                        socketFactory.sendPosition(position.coords.latitude,  position.coords.longitude);
+                    }
 
                     //Marker
                     var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
@@ -82,6 +80,19 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     GPSFunc();
     addCircleFunc();
 
+    function sendAnswer() {
+        //text area
+        if($scope.answer) {
+            console.log($scope.answer);
+        }
+        //Photo
+        var file = document.forms['form']['photoAnswer'].files[0];
+        if(file) {
+            console.log(file.name);
+        }
+        socketFactory.sendAnswer($scope.answer, file);
+    }
+
 
     /**
      * Distance entre 2 coordonnées en km
@@ -107,22 +118,13 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         return (rad_dist * 3437.74677 * 1.1508) * 1.6093470878864446;
     }
 
-    /*
-    $http({
-        method: 'GET',
-        url: 'http://'+IP+'/areas'
-    }).then(function successCallback(response) {
-        // this callback will be called asynchronously
-        // when the response is available
-        console.log(response);
-        // var json = JSON.parse(response);
 
-    }, function errorCallback(response) {
-        // called asynchronously if an error occurs
-        // or server returns response with an error status.
-        console.log(response);
-    });
-    */
+
+    $rootScope.$on('areas', function (data) {
+        console.log( JSON.stringify(data));
+        //todo afficher les areas
+    })
+
 
     //Full screen img
     $('#Fullscreen').css('height', $(document).outerWidth() + 'px');
@@ -136,28 +138,6 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         $(this).fadeOut(); //this will hide the fullscreen div if you click away from the image.
     });
 
-
-    function sendAnswer() {
-
-        //text area
-        if($scope.answer) {
-            console.log($scope.answer);
-        }
-
-        //Photo
-        var file = document.forms['form']['photoAnswer'].files[0];
-        if(file) {
-            console.log(file.name);
-        }
-
-        socketFactory.sendAnswer($scope.answer, file);
-    }
-
-
-    $rootScope.$on('areas', function (data) {
-        console.log( JSON.stringify(data));
-        //todo afficher les areas
-    })
 });
 
 
