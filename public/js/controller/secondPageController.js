@@ -120,11 +120,11 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     }
 
 
-    $rootScope.$on('areas', function (areas) {
+    $rootScope.$on('areas', function (event, data) {
         //console.log(areas);
         //areas : [{"_id":"5877551badfb7d425f340c01","__v":0,"enigmas":[]},{"_id":"5877555483e7a942d0a2d6ed","radius":1,"__v":0,"enigmas":[],"center":{"latitude":"6789","longitude":"56789"}}]
-
-        console.log(JSON.stringify(areas));
+        
+        console.log(data);
 
         //todo afficher les areas
     })
