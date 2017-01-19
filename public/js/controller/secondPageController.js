@@ -144,7 +144,8 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         var file = document.forms['form']['photoAnswer'].files[0];
         if(file) {
             console.log("Answer, file : "+file); //TODO réussir à récupérer la photo
-            $scope.file = file;
+            console.log(window.URL.createObjectURL(file));
+
         }
 
         //Envoie au serveur la réponse
@@ -157,8 +158,8 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      */
     function askClue() {
         socketFactory.askClue();
-        //TODO afficher la réponse
 
+        //TODO afficher la réponse
         $('#indice').show();
     }
 
