@@ -1,8 +1,8 @@
 app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
 
     var marker;
-    var circleCenter = {lat: 43, lng: 7};
-    var circleRadius = 50000;
+    var circlesData;
+    var myLatLngGlobal;
 
     $scope.GPS = GPSFunc;
     $scope.googleMap = googleMapFunc;
@@ -25,12 +25,10 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
                     marker.setPosition(myLatLng);
                     //Map center
                     map.setCenter(myLatLng);
+                    myLatLngGlobal = myLatLng;
 
-                    var distance = distanceFunc(myLatLng.lat, myLatLng.lng, circleCenter.lat, circleCenter.lng);
-                    console.log(distance);
-
-                    if(distance < circleRadius / 1000) {
-                        console.log("Vous etes dans la zone");
+                    if(circlesData) {
+                        checkIfIn(myLatLng);
                     }
                 },
                function (error) {
@@ -110,7 +108,13 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
 
         console.log(data.length);
         for(var i = 0; i < data.length; i++) {
-            addCircleFunc("30000", data[i].center.latitude,  data[i].center.longitude);
+            //console.log(parseFloat(data[i].radius), parseFloat(data[i].center.latitude),  parseFloat(data[i].center.longitude));
+            addCircleFunc(parseFloat(data[i].radius), parseFloat(data[i].center.latitude),  parseFloat(data[i].center.longitude));
+        }
+        circlesData = data;
+
+        if(myLatLngGlobal) {
+            checkIfIn(myLatLngGlobal);
         }
     });
 
@@ -127,6 +131,17 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         });
     }
 
+    function checkIfIn(myLatLng) {
+        for(var i = 0; i < circlesData.length; i++) {
+
+            var distance = distanceFunc(myLatLng.lat, myLatLng.lng, parseFloat(circlesData[i].center.latitude),  parseFloat(circlesData[i].center.longitude));
+            //console.log(distance, parseFloat(circlesData[i].radius));
+
+            if(distance < ( parseFloat(circlesData[i].radius) / 1000)) {
+                console.log("Vous etes dans la zone");
+            }
+        }
+    }
 
 
     //Full screen img
