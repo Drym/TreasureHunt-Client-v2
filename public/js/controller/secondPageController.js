@@ -88,7 +88,8 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         //Photo
         var file = document.forms['form']['photoAnswer'].files[0];
         if(file) {
-            console.log(file.name);
+            console.log(file);
+            $scope.file = file;
         }
         socketFactory.sendAnswer($scope.answer, file);
     }
@@ -121,7 +122,8 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
 
 
     $rootScope.$on('areas', function (data) {
-        console.log( JSON.stringify(data));
+        console.log( data);
+        //areas : [{"_id":"5877551badfb7d425f340c01","__v":0,"enigmas":[]},{"_id":"5877555483e7a942d0a2d6ed","radius":1,"__v":0,"enigmas":[],"center":{"latitude":"6789","longitude":"56789"}}]
         //todo afficher les areas
     })
 

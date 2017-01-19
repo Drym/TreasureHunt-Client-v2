@@ -23,7 +23,11 @@ app.factory('socketFactory', function($rootScope, $state){
 		socket.emit('askClue', enigme);
 	}
 
-	socket.on('connexion', function(isConnected) {
+    socketFactory.askAreas = function(){
+        socket.emit('areasRequest');
+    }
+
+    socket.on('connexion', function(isConnected) {
 		socketFactory.isConnected = isConnected;
 	})
 
@@ -45,6 +49,8 @@ app.factory('socketFactory', function($rootScope, $state){
 			$rootScope.$broadcast('response-ok');
 			socketFactory.isConnected = true;
 			$state.go('secondPageState');
+
+            socketFactory.askAreas();
 		}
 	});
 
