@@ -63,22 +63,8 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         });
     }
 
-    function addCircleFunc() {
-        var cityCircle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: circleCenter,
-            radius: circleRadius
-        });
-    }
-
     googleMapFunc();
     GPSFunc();
-    addCircleFunc();
 
     function sendAnswer() {
         //text area
@@ -121,13 +107,26 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
 
 
     $rootScope.$on('areas', function (event, data) {
-        //console.log(areas);
-        //areas : [{"_id":"5877551badfb7d425f340c01","__v":0,"enigmas":[]},{"_id":"5877555483e7a942d0a2d6ed","radius":1,"__v":0,"enigmas":[],"center":{"latitude":"6789","longitude":"56789"}}]
-        
-        console.log(data);
 
-        //todo afficher les areas
-    })
+        console.log(data.length);
+        for(var i = 0; i < data.length; i++) {
+            addCircleFunc("30000", data[i].center.latitude,  data[i].center.longitude);
+        }
+    });
+
+    function addCircleFunc(radius, lat, lng) {
+        var cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: {lat: lat, lng: lng},
+            radius: radius
+        });
+    }
+
 
 
     //Full screen img

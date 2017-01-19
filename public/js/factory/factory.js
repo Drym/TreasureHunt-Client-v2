@@ -37,11 +37,8 @@ app.factory('socketFactory', function($rootScope, $state){
 	});
 
 	socket.on('areas', function(data) {
-
-		console.log(data[0]);
-		var test = [{'a':'a', 'b':'b'}];
-		console.log(test);
-        $rootScope.$broadcast('areas',  data);
+		console.log('areas : ' + JSON.stringify(data));
+        $rootScope.$broadcast('areas',  JSON.parse(JSON.stringify(data)));
 	 });
 
 	socket.on('response', function(data) {
