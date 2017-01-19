@@ -10,16 +10,24 @@ app.factory('socketFactory', function($rootScope, $state){
 		socket.emit('newUser', {'name' : name, 'team' : team});
 	};
 
-	socketFactory.sendPosition = function(position) {
-		socket.emit('sendPosition', position);
-	};
+    socketFactory.sendPosition = function(lat, lng) {
+	 	socket.emit('sendPosition', {'latitude' : lat, 'longitude' : lng});
+    };
 
-	socketFactory.sendAnswer = function(answer) {
+	socketFactory.sendAnswer = function(answer, photo) {
 		//socketFactory.isEnigme
-		socket.emit('sendAnswer', answer)
+		socket.emit('sendAnswer', {'answer' : answer, 'photo' : photo})
 	};
 
-	socket.on('connexion', function(isConnected) {
+	socketFactory.askClue = function(enigme){
+		socket.emit('askClue', enigme);
+	}
+
+    socketFactory.askAreas = function(){
+        socket.emit('areasRequest');
+    }
+
+    socket.on('connexion', function(isConnected) {
 		socketFactory.isConnected = isConnected;
 	})
 
@@ -39,8 +47,10 @@ app.factory('socketFactory', function($rootScope, $state){
 
 		if(data == "ok") {
 			$rootScope.$broadcast('response-ok');
-			socketFactory.isConnected = false;
+			socketFactory.isConnected = true;
 			$state.go('secondPageState');
+
+            socketFactory.askAreas();
 		}
 	});
 
