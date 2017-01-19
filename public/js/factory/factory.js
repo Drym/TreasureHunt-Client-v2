@@ -1,4 +1,4 @@
-app.factory('socketFactory', function(){
+app.factory('socketFactory', function($rootScope){
 	var socketFactory = {};
 
 	socketFactory.isConnected = true;
@@ -15,7 +15,7 @@ app.factory('socketFactory', function(){
 	 };
 
 	 socketFactory.sendAnswer = function(answer) {
-	 	socketFactory.isEnigme
+	 	//socketFactory.isEnigme
 	 	socket.emit('sendAnswer', answer)
 	 };
 
@@ -30,7 +30,17 @@ app.factory('socketFactory', function(){
 
 	 socket.on('areas', function(data) {
 	 	console.log('areas : ' + JSON.stringify(data));
+
+		 socketFactory.areas = data;
 	 });
+
+	socket.on('response', function(data) {
+		console.log('response : ' + data); //ok ou ko
+
+		if(data == "ok") {
+			$rootScope.$broadcast('response-ok');
+		}
+	});
 
 	return socketFactory;
 });

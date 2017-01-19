@@ -24,6 +24,9 @@
                         </p>
                         <img id="img-enigma" class="img-responsive center-block" src="http://iwallpapers2.free.fr/images/Dessin/Leopard_artistique_-_fond_ecran.jpg"/>
                     </div>
+                    <div class="col-xs-12">
+                        <a href="" class="btn btn-default" style="margin-top: 10px">Demander un indice</a>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -31,19 +34,19 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label pull-left">Réponse</label>
                         <div class="col-md-10">
-                            <textarea style="resize: vertical" class="form-control" id="answer" placeholder="Votre réponse..."></textarea>
+                            <textarea style="resize: vertical" class="form-control" id="answer" placeholder="Votre réponse..." ng-model="answer"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-2 control-label pull-left">Photo</label>
                         <div class="col-md-10">
-                            <input type="file" id="photoAnswer">
+                            <input type="file" id="photoAnswer" ng-model="photoAnswer">
                         </div>
                     </div>
                     <br />
                     <div class="form-group">
                         <div class="col-xs-12 text-center">
-                            <input type="submit" class="btn btn-default" value="Envoyer" data-toggle="modal" data-target="#enigmaModal"/>
+                            <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer" data-toggle="modal" data-target="#enigmaModal"/>
                         </div>
                     </div>
                 </form>

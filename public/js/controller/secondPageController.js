@@ -1,4 +1,4 @@
-app.controller("secondCtrl", function($scope, $http) {
+app.controller("secondCtrl", function($scope, socketFactory) {
 
     var marker;
     var circleCenter = {lat: 43, lng: 7};
@@ -9,6 +9,7 @@ app.controller("secondCtrl", function($scope, $http) {
     $scope.GPS = GPSFunc;
     $scope.googleMap = googleMapFunc;
     $scope.addCircle = addCircleFunc;
+    $scope.sendAnswer = sendAnswer;
 
     function GPSFunc () {
 
@@ -16,6 +17,10 @@ app.controller("secondCtrl", function($scope, $http) {
             navigator.geolocation.watchPosition(function (position) {
                     console.log('latitude : ' + position.coords.latitude);
                     // TODO : Envoyer notre position au serveur
+
+                    if(socketFactory.isConnected) {
+                        socketFactory.sendPosition(position);
+                    }
 
                     //Marker
                     var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
@@ -132,6 +137,15 @@ app.controller("secondCtrl", function($scope, $http) {
     });
 
 
+    function sendAnswer() {
+
+        console.log("AAAA");
+        console.log($scope.answer);
+        var file = document.getElementById('photoAnswer');
+        console.log(file);
+
+        //socketFactory.sendAnswer();
+    }
 });
 
 
