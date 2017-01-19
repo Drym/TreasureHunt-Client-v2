@@ -1,44 +1,25 @@
 app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
 
+    //Variables globales
     var marker;
     var circlesData;
     var myLatLngGlobal;
 
-    $scope.GPS = GPSFunc;
-    $scope.googleMap = googleMapFunc;
-    $scope.addCircle = addCircleFunc;
+    //$scope functions
     $scope.sendAnswer = sendAnswer;
 
-    function GPSFunc () {
+    //Fonctions appelées au lancement
+    googleMapInit();
+    GPSTracker();
 
-        if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(function (position) {
-                    console.log('latitude : ' + position.coords.latitude);
-                    console.log('longitude : ' + position.coords.longitude);
+    //============================================================================
+    //======                        Google map                              ======
+    //============================================================================
 
-                    if(socketFactory.isConnected) {
-                        socketFactory.sendPosition(position.coords.latitude,  position.coords.longitude);
-                    }
-
-                    //Marker
-                    var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
-                    marker.setPosition(myLatLng);
-                    //Map center
-                    map.setCenter(myLatLng);
-                    myLatLngGlobal = myLatLng;
-
-                    if(circlesData) {
-                        checkIfIn(myLatLng);
-                    }
-                },
-               function (error) {
-                    console.log(error);
-               }
-            );
-        }
-    }
-
-    function googleMapFunc() {
+    /**
+     * Initialise la google map
+     */
+    function googleMapInit() {
 
         var myLatLng = {lat: 0, lng: 0};
 
@@ -55,39 +36,134 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         var infowindow = new google.maps.InfoWindow({
             content: "Vous êtes ici !"
         });
+
         //Link marker and popup
         marker.addListener('click', function() {
             infowindow.open(map, marker);
         });
     }
 
-    googleMapFunc();
-    GPSFunc();
-
-    function sendAnswer() {
-        //text area
-        if($scope.answer) {
-            console.log($scope.answer);
-        }
-        //Photo
-        var file = document.forms['form']['photoAnswer'].files[0];
-        if(file) {
-            console.log(file);
-            $scope.file = file;
-        }
-        socketFactory.sendAnswer($scope.answer, file);
+    /**
+     * Ajoute un cercle sur la google map
+     * @param radius
+     * @param lat
+     * @param lng
+     */
+    function addCircleFunc(radius, lat, lng) {
+        console.log("Nouvelle zone ajoutée !");
+        var cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: {lat: lat, lng: lng},
+            radius: radius
+        });
     }
 
+    //============================================================================
+    //======                             GPS                                ======
+    //============================================================================
 
     /**
-     * Distance entre 2 coordonnées en km
+     * Récupère la position en temps réel de l'utilisateur
+     * La transmet au serveur
+     * Et vérifie à chaque déplacement si l'utilisateur est dans une zone
+     */
+    function GPSTracker() {
+
+        //Vérifie que la géolocalisation est disponible
+        if (navigator.geolocation) {
+            //Actualise à chaque déplacement
+            navigator.geolocation.watchPosition(function (position) {
+                console.log('Position utilisateur : ' + position.coords.latitude,  position.coords.longitude);
+
+                //Envoie la position au serveur
+                if(socketFactory.isConnected) {
+                    socketFactory.sendPosition(position.coords.latitude,  position.coords.longitude);
+                }
+
+                //Ajoute la position de l'utilisateur sur la map et centre la map
+                var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
+                marker.setPosition(myLatLng);
+                map.setCenter(myLatLng);
+
+                //Stock les coordonnées dans une var globale
+                myLatLngGlobal = myLatLng;
+
+                //Vérifie si l'utilisateur est dans une zone (si les zones sont disponibles)
+                if(circlesData) {
+                    checkIfIn(myLatLng);
+                }
+            },
+            function (error) {
+                console.log(error);
+            });
+        }
+    }
+
+    //============================================================================
+    //======                      Communication                             ======
+    //============================================================================
+
+    /**
+     * Ecoute le broadcast sur 'areas' et affiche les zones
+     */
+    $rootScope.$on('areas', function (event, data) {
+
+        console.log("Nombre d'areas : "+data.length);
+        for(var i = 0; i < data.length; i++) {
+
+            //Vérifie que les informations ne sont pas nulles
+            if(data[i].radius && data[i].center) {
+                //console.log(parseFloat(data[i].radius), parseFloat(data[i].center.latitude), parseFloat(data[i].center.longitude));
+                addCircleFunc(parseFloat(data[i].radius), parseFloat(data[i].center.latitude), parseFloat(data[i].center.longitude));
+            }
+        }
+        //Stock les données des zones dans une variables globales pour les afficher à tout moment
+        circlesData = data;
+
+        //Vérifie sur l'utilisation n'est pas déjà dans une zone, si sa position est disponible
+        if(myLatLngGlobal) {
+            checkIfIn(myLatLngGlobal);
+        }
+    });
+
+    /**
+     * Récupère les informations du formulaire et les envoie au serveur
+     */
+    function sendAnswer() {
+        //Text aera
+        if($scope.answer) {
+            console.log("Answer, text area : "+$scope.answer);
+        }
+        //File (photo)
+        var file = document.forms['form']['photoAnswer'].files[0];
+        if(file) {
+            console.log("Answer, file : "+file);
+            $scope.file = file;
+        }
+
+        //Envoie au serveur la réponse
+        socketFactory.sendAnswer($scope.answer, file);
+        //TODO Vérifier la réponse du serveur et informer l'utilisateur
+    }
+
+    //============================================================================
+    //======                         Calculs                                ======
+    //============================================================================
+
+    /**
+     * Calcul de la distance entre 2 coordonnées en km
      * @param lat_a
      * @param lon_a
      * @param lat_b
      * @param lon_b
      * @returns {number}
      */
-    function distanceFunc(lat_a, lon_a, lat_b, lon_b)  {
+    function getDistance(lat_a, lon_a, lat_b, lon_b)  {
         var a = Math.PI / 180;
         var lat1 = lat_a * a;
         var lat2 = lat_b * a;
@@ -103,50 +179,37 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         return (rad_dist * 3437.74677 * 1.1508) * 1.6093470878864446;
     }
 
-
-    $rootScope.$on('areas', function (event, data) {
-
-        console.log(data.length);
-        for(var i = 0; i < data.length; i++) {
-            //console.log(parseFloat(data[i].radius), parseFloat(data[i].center.latitude),  parseFloat(data[i].center.longitude));
-            addCircleFunc(parseFloat(data[i].radius), parseFloat(data[i].center.latitude),  parseFloat(data[i].center.longitude));
-        }
-        circlesData = data;
-
-        if(myLatLngGlobal) {
-            checkIfIn(myLatLngGlobal);
-        }
-    });
-
-    function addCircleFunc(radius, lat, lng) {
-        var cityCircle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: {lat: lat, lng: lng},
-            radius: radius
-        });
-    }
-
+    /**
+     * Vérifie pour toutes les zones si l'utilisateur est dans l'une d'elles
+     * @param myLatLng
+     */
     function checkIfIn(myLatLng) {
         for(var i = 0; i < circlesData.length; i++) {
 
-            var distance = distanceFunc(myLatLng.lat, myLatLng.lng, parseFloat(circlesData[i].center.latitude),  parseFloat(circlesData[i].center.longitude));
-            //console.log(distance, parseFloat(circlesData[i].radius));
+            //Vérifie que les informations ne sont pas nulles
+            if(circlesData[i].radius && circlesData[i].center) {
 
-            if(distance < ( parseFloat(circlesData[i].radius) / 1000)) {
-                console.log("Vous etes dans la zone");
+                //Calcul la distance
+                var distance = getDistance(myLatLng.lat, myLatLng.lng, parseFloat(circlesData[i].center.latitude), parseFloat(circlesData[i].center.longitude));
+
+                //Vérifie si l'utilisateur est dans la zone
+                if (distance < ( parseFloat(circlesData[i].radius) / 1000)) {
+                    console.log("Vous etes dans la zone");
+                    //TODO lancer l'enigme
+                }
             }
         }
     }
 
 
-    //Full screen img
+    //============================================================================
+    //======                        Affichage                               ======
+    //============================================================================
+
+    /**
+     * Permet d'afficher l'image de l'enigme en plein écran
+     */
     $('#Fullscreen').css('height', $(document).outerWidth() + 'px');
-    //for when you click on an image
     $('#img-enigma').click(function () {
         var src = $(this).attr('src'); //get the source attribute of the clicked image
         $('#Fullscreen img').attr('src', src); //assign it to the tag for your fullscreen div
