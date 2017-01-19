@@ -16,7 +16,15 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 		controller : 'secondCtrl'
 	}
 
+	var thirdPageState = {
+		name : 'thirdPageState',
+		url : '/third',
+		templateUrl : 'view/thirdPage.html',
+		controller : 'thirdCtrl'
+	}
+
 	$stateProvider.state(firstPageState);
 	$stateProvider.state(secondPageState);
+	$stateProvider.state(thirdPageState);
 	$urlRouterProvider.otherwise('/');
 })

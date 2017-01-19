@@ -4,7 +4,7 @@ app.controller("secondCtrl", function($scope, $http) {
     var circleCenter = {lat: 43, lng: 7};
     var circleRadius = 50000;
 
-    var IP = '10.212.116.203:8080';
+    //var IP = '10.212.116.203:8080';
 
     $scope.GPS = GPSFunc;
     $scope.googleMap = googleMapFunc;
@@ -102,7 +102,7 @@ app.controller("secondCtrl", function($scope, $http) {
         return (rad_dist * 3437.74677 * 1.1508) * 1.6093470878864446;
     }
 
-
+    /*
     $http({
         method: 'GET',
         url: 'http://'+IP+'/areas'
@@ -117,7 +117,7 @@ app.controller("secondCtrl", function($scope, $http) {
         // or server returns response with an error status.
         console.log(response);
     });
-
+    */
 
     //Full screen img
     $('#Fullscreen').css('height', $(document).outerWidth() + 'px');
