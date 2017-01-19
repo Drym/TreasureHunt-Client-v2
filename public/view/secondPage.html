@@ -1,8 +1,12 @@
-<div id="map"></div>
-<button type="button" class="btn btn-success" style="position: absolute; bottom: 20px; left: 20px;border-radius: 100px; height: 40px">
-    <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
-</button>
-<a href="" data-toggle="modal" data-target="#enigmaModal">Yolo modal open link</a>
+<div class="row">
+    <div class="col-xs-12">
+        <div id="map"></div>
+    </div>
+</div>
+<button data-toggle="modal" data-target="#enigmaModal" id="modalButton" type="button" class="btn"></button>
+<div id="Fullscreen">
+    <img src="" alt="" />
+</div>
 <!-- MODALS -->
 <!-- ENIGMA -->
 <div class="modal fade" id="enigmaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
@@ -18,21 +22,21 @@
                         <p class="text-justify">
                             Blabla de l'enigme tout ca tout ca. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate urna luctus quam fringilla, non vulputate orci tincidunt. Integer mi nibh, tincidunt in congue et, faucibus quis enim. Duis facilisis ante vitae porta sodales. Suspendisse sed lacus volutpat dolor condimentum euismod. Integer vel tellus sed dui dictum molestie
                         </p>
-                        <img class="img-responsive" src="http://www.lunerouge.org/textures/wall/LRwall0012.jpg"/>
+                        <img id="img-enigma" class="img-responsive center-block" src="http://iwallpapers2.free.fr/images/Dessin/Leopard_artistique_-_fond_ecran.jpg"/>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <form class="form-horizontal col-xs-12">
                     <div class="form-group">
-                        <label class="col-md-3 control-label pull-left">Réponse</label>
-                        <div class="col-md-9">
+                        <label class="col-md-2 control-label pull-left">Réponse</label>
+                        <div class="col-md-10">
                             <textarea style="resize: vertical" class="form-control" id="answer" placeholder="Votre réponse..."></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label pull-left">Photo</label>
-                        <div class="col-md-9">
+                        <label class="col-md-2 control-label pull-left">Photo</label>
+                        <div class="col-md-10">
                             <input type="file" id="photoAnswer">
                         </div>
                     </div>

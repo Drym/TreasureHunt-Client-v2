@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>Treasure Hunt Client</title>
 	<!-- Angular -->
 	<script src="bower_components/angular/angular.min.js"></script>
@@ -50,9 +50,9 @@
 				<div class="collapse navbar-collapse" id="js-navbar-collapse">
 
 					<ul class="nav navbar-nav">
-						<!-- TODO fix class="active" -->
 						<li ui-sref-active="active"><a ui-sref="firstPageState">Accueil</a></li>
 						<li ui-sref-active="active"><a ui-sref="secondPageState" ng-show="socketFactory.isConnected">Carte</a></li>
+						<li ui-sref-active="active"><a ui-sref="thirdPageState">Chat</a></li>
 					</ul>
 				</div>
 			</div>
