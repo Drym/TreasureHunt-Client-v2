@@ -10,19 +10,14 @@ app.factory('socketFactory', function($rootScope, $state){
 		socket.emit('newUser', {'name' : name, 'team' : team});
 	};
 
-    socketFactory.sendPosition = function(position) {
-	 	console.log('sendPosition');
-	 	socket.emit('sendPosition', position);
-    };
+	socketFactory.sendPosition = function(position) {
+		socket.emit('sendPosition', position);
+	};
 
 	socketFactory.sendAnswer = function(answer) {
 		//socketFactory.isEnigme
 		socket.emit('sendAnswer', answer)
 	};
-
-	socketFactory.askClue = function(enigme){
-		socket.emit('askClue', enigme);
-	}
 
 	socket.on('connexion', function(isConnected) {
 		socketFactory.isConnected = isConnected;
@@ -36,8 +31,8 @@ app.factory('socketFactory', function($rootScope, $state){
 	socket.on('areas', function(data) {
 		console.log('areas : ' + JSON.stringify(data));
 
-		 $rootScope.$broadcast('areas', data);
-	 });
+		socketFactory.areas = data;
+	});
 
 	socket.on('response', function(data) {
 		console.log('response : ' + data); // OK ou KO
