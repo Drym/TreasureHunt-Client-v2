@@ -1,8 +1,13 @@
-<div class="row">
-    <div class="col-xs-12 col-md-3 col-md-push-9">
-        Num des MJ ici
-    </div>
-    <div class="col-xs-12 col-md-9 col-md-pull-3">
-        Chat ici
-    </div>
+<div class="chat col-xs-12">
+	<div id="messages" class="messages row">
+		<div ng-repeat="message in messages" class="message" ng-class="{received: (message.user == 'him'), sent: (message.user == myName)}">
+			{{message.user}} : {{message.content}}
+		</div>
+	</div>
+	<div class="row chatSendPart">
+		<input class="messageInput" ng-model="myMessage">
+		<button type="button" class="btn btn-primary" ng-click="sendMessage(myMessage)">
+			<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+		</button>
+	</div>
 </div>

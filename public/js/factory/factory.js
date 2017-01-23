@@ -4,6 +4,7 @@ app.factory('socketFactory', function($rootScope, $state){
 	socketFactory.isConnected = false;
 	socketFactory.isEnigme = false;
 	socketFactory.teamId;
+	socketFactory.name;
 
 	var socket = io('http://10.212.99.100:8080');
 
@@ -15,6 +16,7 @@ app.factory('socketFactory', function($rootScope, $state){
 	socketFactory.sendNameTeam = function(name, team) {
 	    console.log("Socket emit : newUser");
 	    socketFactory.teamId = team;
+	    socketFactory.name = name;
 		socket.emit('newUser', {'name' : name, 'team' : team});
 	};
 
@@ -65,6 +67,19 @@ app.factory('socketFactory', function($rootScope, $state){
         console.log("Socket emit : askAreas");
         socket.emit('areasRequest');
     }
+
+    /**
+     * Demande les zones de jeu
+     */
+    socketFactory.sendMessage = function(message){
+        console.log("Socket emit : sendMessage");
+        socket.emit('newMessage', {'id' : socketFactory.teamId, 'name' : socketFactory, 'message' : message});
+    }
+
+    socket.on('newMessage', function(message) {
+        console.log("Socket on : newMessage");
+    	$rootScope.$broadcast('newMessage', message);
+    });
 
     /**
      * Lorsque l'on recoit une connexion

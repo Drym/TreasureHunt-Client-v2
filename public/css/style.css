@@ -1,3 +1,27 @@
+/* Chat */
+.messages {
+    height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
+
+.sent {
+    text-align: right;
+}
+
+.messageInput {
+    width: calc(100% - 50px);
+    margin-left: 5px;
+}
+
+.chatSendPart {
+    margin-top: 15px;
+}
+
 /* Nav Bar */
 .navbar-brand img {
     position: relative;
