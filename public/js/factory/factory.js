@@ -25,7 +25,7 @@ app.factory('socketFactory', function($rootScope, $state){
 	 */
     socketFactory.sendPosition = function(lat, lng) {
         console.log("Socket emit : sendPosition");
-	 	socket.emit('sendPosition', {'id': socketFactory.teamId, 'data': {'latitude' : lat, 'longitude' : lng, 'id'}});
+	 	socket.emit('sendPosition', {'id': socketFactory.teamId, 'data': {'latitude' : lat, 'longitude' : lng}});
     };
 
     /**
