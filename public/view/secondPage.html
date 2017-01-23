@@ -2,7 +2,6 @@
     <div class="col-xs-12">
         <div id="map"></div>
     </div>
-    my lat long : {{myLatLngGlobal}}
 </div>
 <button data-toggle="modal" data-target="#enigmaModal" id="modalButton" type="button" class="btn"></button>
 <div id="Fullscreen">
@@ -15,19 +14,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Enigme</h4>
+                <h4 class="modal-title" id="myModalLabel">Enigme : {{enigma.title}}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
                         <p class="text-justify">
-                            Blabla de l'enigme tout ca tout ca. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate urna luctus quam fringilla, non vulputate orci tincidunt. Integer mi nibh, tincidunt in congue et, faucibus quis enim. Duis facilisis ante vitae porta sodales. Suspendisse sed lacus volutpat dolor condimentum euismod. Integer vel tellus sed dui dictum molestie
+                            <div ng-if="enigma.text">{{enigma.text}}</div>
+                            <div ng-if="!enigma.text" class="text-center">Pas encore d'énigmes !</div>
                         </p>
-                        <img id="img-enigma" class="img-responsive center-block" src="http://iwallpapers2.free.fr/images/Dessin/Leopard_artistique_-_fond_ecran.jpg"/>
+                        <img id="img-enigma" class="img-responsive center-block" ng-src="{{enigma.photo}}"/>
                     </div>
                     <div class="col-xs-12">
                         <a href="" ng-click="askClue()" class="btn btn-default" style="margin-top: 10px">Demander un indice</a>
-                        <span id="indice">Indice à afficher ici !</span>
+                        <span id="indice">{{responseClue}}</span>
                     </div>
                 </div>
             </div>
@@ -48,8 +48,16 @@
                     <br />
                     <div class="form-group">
                         <div class="col-xs-12 text-center">
-                            <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer" data-toggle="modal" data-target="#enigmaModal"/>
+                            <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer"/>
                         </div>
+                    </div>
+                    <div class="text-success col-xs-12 text-center" ng-if="reponseEnigma == 'ok'">
+                        <p>Bonne réponse !</p>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal"> Fermer </button>
+                    </div>
+                    <div class="text-danger col-xs-12 text-center" ng-if="reponseEnigma == 'ko'">
+                        <p>Mauvaise réponse !</p>
+                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal"> Fermer </button>
                     </div>
                 </form>
             </div>

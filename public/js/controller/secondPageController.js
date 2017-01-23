@@ -4,6 +4,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     var marker;
     var circlesData;
     $scope.myLatLngGlobal;
+    $scope.enigma = {'title': "", 'text' : "", 'photo' : ""};
 
     //$scope functions
     $scope.sendAnswer = sendAnswer;
@@ -154,14 +155,47 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     }
 
     /**
+     * Vérifie la réponse de l'enigme
+     */
+    $rootScope.$on('response-enigma', function (event, data) {
+        $scope.reponseEnigma = data;
+        $scope.$apply();
+        if(data == 'ok') {
+            console.log("Bonne réponse");
+            $('#indice').hide();
+        } else {
+            console.log("Mauvaise réponse");
+        }
+    });
+
+    /**
      * Demande un indice
      */
      function askClue() {
         socketFactory.askClue();
-
-        //TODO afficher la réponse
-        $('#indice').show();
     }
+
+    /**
+     * Réception d'une enigme
+     */
+    $rootScope.$on('enigme', function (event, data) {
+
+        $('#modalButton').css("display", "block");
+        $scope.enigma.title = data.name;
+        $scope.enigma.text = data.enigma;
+        $scope.enigma.photo = data.image;
+
+        $scope.$apply();
+    });
+
+    /**
+     * Réception d'un indice
+     */
+    $rootScope.$on('response-clue', function (event, data) {
+
+        $scope.responseClue = data;
+        $('#indice').show();
+    });
 
     //============================================================================
     //======                         Calculs                                ======
@@ -232,7 +266,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         $(this).fadeOut(); //this will hide the fullscreen div if you click away from the image.
     });
 
- });
+});
 
 
 

@@ -53,6 +53,7 @@ div#map {
     background-repeat: no-repeat;
     border: none;
     background-color: #ff8100;
+    display: none;
 }
 
 
