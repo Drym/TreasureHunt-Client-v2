@@ -151,6 +151,15 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         //Envoie au serveur la réponse
         socketFactory.sendAnswer($scope.answer, file);
         //TODO Vérifier la réponse du serveur et informer l'utilisateur
+        $rootScope.$on('response-enigma', function (event, data) {
+            if(data == 'ok') {
+                console.log("Bonne réponse");
+                $scope.reponseEnigma = "Bonne réponse !"
+            } else {
+                console.log("Mauvaise réponse");
+                $scope.reponseEnigma = "Mauvaise réponse !"
+            }
+        });
     }
 
     /**
@@ -162,6 +171,35 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         //TODO afficher la réponse
         $('#indice').show();
     }
+
+    /**
+     * Réception d'une enigme
+     */
+    $rootScope.$on('enigme', function (event, data) {
+
+        $scope.enigmaTitle = data.name;
+        $scope.enigmaText = data.enigma;
+        $scope.enigmaPhoto = data.image;
+
+        /*
+         var enigmaSchema = new mongoose.Schema({
+         name: String,
+         enigma: String,
+         hint: [String],
+         points: Number,
+         image: { type: Buffer, required: false},
+
+         area: {type: Schema.ObjectId, ref: 'Area'}
+         });
+         */
+    });
+
+    /**
+     * Réception d'un indice
+     */
+    $rootScope.$on('response-clue', function (event, data) {
+        $scope.responseClue = data;
+    });
 
     //============================================================================
     //======                         Calculs                                ======
@@ -232,7 +270,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         $(this).fadeOut(); //this will hide the fullscreen div if you click away from the image.
     });
 
- });
+});
 
 
 

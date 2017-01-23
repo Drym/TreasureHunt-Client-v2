@@ -45,8 +45,8 @@ app.factory('socketFactory', function($rootScope, $state){
 	* @param areaId
 	*/
 	socketFactory.getEnigme = function(areaId) {
-		console.log('enigme id : ' + areaId);
-		socket.emit('getEnigme', {'id': socketFactory.teamId, 'data' : {'areaId' : areaId}});
+		console.log('Socket emit : getEnigme');
+		socket.emit('enigmaRequest', {'id': socketFactory.teamId, 'data' : {'areaId' : areaId}});
 	}
 
     /**
@@ -81,6 +81,8 @@ app.factory('socketFactory', function($rootScope, $state){
         console.log("Socket on : enigme");
 		socketFactory.isEnigme = true;
 		console.log('enigme : ' + JSON.stringify(data))
+
+        $rootScope.$broadcast('enigme',  JSON.parse(JSON.stringify(data)));
 	});
 
     /**
@@ -107,6 +109,23 @@ app.factory('socketFactory', function($rootScope, $state){
             socketFactory.askAreas();
 		}
 	});
+
+    /**
+     * Retour du résultat de l'enigme
+     */
+    socket.on('response-enigma', function(data) {
+        console.log("Socket on : response-enigma");
+        $rootScope.$broadcast('response-enigma',  data);
+    });
+
+	/**
+	 * Retour du résultat d'une demande d'indice
+	 */
+	socket.on('response-clue', function(data) {
+		console.log("Socket on : response-clue");
+		$rootScope.$broadcast('response-clue',  data);
+	});
+
 
 	return socketFactory;
 });

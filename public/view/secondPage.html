@@ -15,19 +15,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                <h4 class="modal-title" id="myModalLabel">Enigme</h4>
+                <h4 class="modal-title" id="myModalLabel">Enigme : {{enigmaTitle}}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12">
                         <p class="text-justify">
-                            Blabla de l'enigme tout ca tout ca. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vulputate urna luctus quam fringilla, non vulputate orci tincidunt. Integer mi nibh, tincidunt in congue et, faucibus quis enim. Duis facilisis ante vitae porta sodales. Suspendisse sed lacus volutpat dolor condimentum euismod. Integer vel tellus sed dui dictum molestie
+                            <div ng-if="enigmaText">{{enigmaText}}</div>
+                            <div ng-if="!enigmaText" class="text-center">Pas encore d'énigmes !</div>
                         </p>
-                        <img id="img-enigma" class="img-responsive center-block" src="http://iwallpapers2.free.fr/images/Dessin/Leopard_artistique_-_fond_ecran.jpg"/>
+                        <img id="img-enigma" class="img-responsive center-block" ng-src="{{enigmaPhoto}}"/>
                     </div>
                     <div class="col-xs-12">
                         <a href="" ng-click="askClue()" class="btn btn-default" style="margin-top: 10px">Demander un indice</a>
-                        <span id="indice">Indice à afficher ici !</span>
+                        <span id="indice">{{responseClue}}</span>
                     </div>
                 </div>
             </div>
@@ -48,8 +49,9 @@
                     <br />
                     <div class="form-group">
                         <div class="col-xs-12 text-center">
-                            <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer" data-toggle="modal" data-target="#enigmaModal"/>
+                            <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer"/>
                         </div>
+                        {{reponseEnigma}} <!-- data-toggle="modal" data-target="#enigmaModal" -->
                     </div>
                 </form>
             </div>
