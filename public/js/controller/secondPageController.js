@@ -4,6 +4,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     var marker;
     var circlesData;
     $scope.myLatLngGlobal;
+    $scope.enigma = {'title': "", 'text' : "", 'photo' : ""};
 
     //$scope functions
     $scope.sendAnswer = sendAnswer;
@@ -151,25 +152,27 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         //Envoie au serveur la réponse
         socketFactory.sendAnswer($scope.answer, file);
         //TODO Vérifier la réponse du serveur et informer l'utilisateur
-        $rootScope.$on('response-enigma', function (event, data) {
-            if(data == 'ok') {
-                console.log("Bonne réponse");
-                $scope.reponseEnigma = "Bonne réponse !"
-            } else {
-                console.log("Mauvaise réponse");
-                $scope.reponseEnigma = "Mauvaise réponse !"
-            }
-        });
     }
+
+    /**
+     * Vérifie la réponse de l'enigme
+     */
+    $rootScope.$on('response-enigma', function (event, data) {
+        $scope.reponseEnigma = data;
+        $scope.$apply();
+        if(data == 'ok') {
+            console.log("Bonne réponse");
+            $('#indice').hide();
+        } else {
+            console.log("Mauvaise réponse");
+        }
+    });
 
     /**
      * Demande un indice
      */
      function askClue() {
         socketFactory.askClue();
-
-        //TODO afficher la réponse
-        $('#indice').show();
     }
 
     /**
@@ -177,28 +180,21 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      */
     $rootScope.$on('enigme', function (event, data) {
 
-        $scope.enigmaTitle = data.name;
-        $scope.enigmaText = data.enigma;
-        $scope.enigmaPhoto = data.image;
+        $('#modalButton').css("display", "block");
+        $scope.enigma.title = data.name;
+        $scope.enigma.text = data.enigma;
+        $scope.enigma.photo = data.image;
 
-        /*
-         var enigmaSchema = new mongoose.Schema({
-         name: String,
-         enigma: String,
-         hint: [String],
-         points: Number,
-         image: { type: Buffer, required: false},
-
-         area: {type: Schema.ObjectId, ref: 'Area'}
-         });
-         */
+        $scope.$apply();
     });
 
     /**
      * Réception d'un indice
      */
     $rootScope.$on('response-clue', function (event, data) {
+
         $scope.responseClue = data;
+        $('#indice').show();
     });
 
     //============================================================================

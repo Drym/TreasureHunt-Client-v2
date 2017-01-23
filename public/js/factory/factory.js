@@ -77,10 +77,10 @@ app.factory('socketFactory', function($rootScope, $state){
     /**
      * Lorsque l'on recoit une enigme
      */
-	socket.on('enigme', function(data) {
+	socket.on('enigmaRequest', function(data) {
         console.log("Socket on : enigme");
 		socketFactory.isEnigme = true;
-		console.log('enigme : ' + JSON.stringify(data))
+		console.log('enigme : ' + JSON.stringify(data));
 
         $rootScope.$broadcast('enigme',  JSON.parse(JSON.stringify(data)));
 	});
@@ -114,7 +114,7 @@ app.factory('socketFactory', function($rootScope, $state){
      * Retour du résultat de l'enigme
      */
     socket.on('response-enigma', function(data) {
-        console.log("Socket on : response-enigma");
+        console.log("Socket on : response-enigma"); // ok ou ko
         $rootScope.$broadcast('response-enigma',  data);
     });
 
