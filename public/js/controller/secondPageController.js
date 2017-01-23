@@ -208,6 +208,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
                 if (distance < ( parseFloat(circlesData[i].radius) / 1000)) {
                     console.log("Vous etes dans la zone");
                     //TODO lancer l'enigme
+                    socketFactory.getEnigme(circlesData[i]._id);
                 }
             }
         }

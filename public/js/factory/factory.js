@@ -3,8 +3,9 @@ app.factory('socketFactory', function($rootScope, $state){
 
 	socketFactory.isConnected = false;
 	socketFactory.isEnigme = false;
+	socketFactory.teamId;
 
-	var socket = io('http://10.188.209.159:8080');
+	var socket = io('http://10.212.99.100:8080');
 
 	/**
 	 * Envoie le pseudo et l'équipe dans nouveau joueur
@@ -13,6 +14,7 @@ app.factory('socketFactory', function($rootScope, $state){
 	 */
 	socketFactory.sendNameTeam = function(name, team) {
 	    console.log("Socket emit : newUser");
+	    socketFactory.teamId = team;
 		socket.emit('newUser', {'name' : name, 'team' : team});
 	};
 
@@ -23,7 +25,7 @@ app.factory('socketFactory', function($rootScope, $state){
 	 */
     socketFactory.sendPosition = function(lat, lng) {
         console.log("Socket emit : sendPosition");
-	 	socket.emit('sendPosition', {'latitude' : lat, 'longitude' : lng});
+	 	socket.emit('sendPosition', {'id': socketFactory.teamId, 'data': {'latitude' : lat, 'longitude' : lng, 'id'}});
     };
 
     /**
@@ -34,16 +36,26 @@ app.factory('socketFactory', function($rootScope, $state){
 	socketFactory.sendAnswer = function(answer, photo) {
 		//socketFactory.isEnigme
         console.log("Socket emit : sendAnswer");
-		socket.emit('sendAnswer', {'answer' : answer, 'photo' : photo})
+		socket.emit('sendAnswer', {'id': socketFactory.teamId, 'data' : {'answer' : answer, 'photo' : photo}});
 	};
+
+
+	/**
+	* Envoie l'id de la zone dans laquelle l'utilisateur est
+	* @param areaId
+	*/
+	socketFactory.getEnigme = function(areaId) {
+		console.log('enigme id : ' + areaId);
+		socket.emit('getEnigme', {'id': socketFactory.teamId, 'data' : {'areaId' : areaId}});
+	}
 
     /**
      * Demande un indice
      * @param enigme
      */
-	socketFactory.askClue = function(enigme){
+	socketFactory.askClue = function(enigmeId){
         console.log("Socket emit : askClue");
-		socket.emit('askClue', enigme);
+		socket.emit('askClue', {'id' : socketFactory.teamId, 'data' : {'enigmeId' : enigmeId}});
 	}
 
     /**
