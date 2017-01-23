@@ -95,7 +95,7 @@ app.factory('socketFactory', function($rootScope, $state){
 	socket.on('enigmaRequest', function(data) {
         console.log("Socket on : enigme");
 		socketFactory.isEnigme = true;
-		console.log('enigme : ' + JSON.stringify(data));
+		//console.log('enigme : ' + JSON.stringify(data));
 
         $rootScope.$broadcast('enigme',  JSON.parse(JSON.stringify(data)));
 	});
