@@ -6,7 +6,7 @@ app.factory('socketFactory', function($rootScope, $state){
 	socketFactory.teamId;
 	socketFactory.name;
 
-	var socket = io('http://10.212.99.100:8080');
+	var socket = io('https://10.212.99.100:8080');
 
 	/**
 	 * Envoie le pseudo et l'équipe dans nouveau joueur
