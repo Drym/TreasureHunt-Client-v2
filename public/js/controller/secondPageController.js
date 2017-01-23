@@ -9,6 +9,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     //$scope functions
     $scope.sendAnswer = sendAnswer;
     $scope.askClue = askClue;
+    $scope.onCloseModal = onCloseModal;
 
     //Fonctions appelées au lancement
     googleMapInit();
@@ -266,6 +267,14 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         $(this).fadeOut(); //this will hide the fullscreen div if you click away from the image.
     });
 
+
+    /**
+     * Effacer bonne ou mauvaise réponse
+     */
+    function onCloseModal() {
+        $scope.reponseEnigma = "";
+        $scope.$apply();
+    }
 });
 
 
