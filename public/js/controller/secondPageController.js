@@ -3,7 +3,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     //Variables globales
     var marker;
     var circlesData;
-    var myLatLngGlobal;
+    $scope.myLatLngGlobal;
 
     //$scope functions
     $scope.sendAnswer = sendAnswer;
@@ -20,9 +20,8 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     /**
      * Initialise la google map
      */
-    function googleMapInit() {
-
-        var myLatLng = {lat: 0, lng: 0};
+     function googleMapInit() {
+        var myLatLng = {lat: 43, lng: 7};
 
         map = new google.maps.Map(document.getElementById('map'), {
             center: myLatLng,
@@ -50,7 +49,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      * @param lat
      * @param lng
      */
-    function addCircleFunc(radius, lat, lng) {
+     function addCircleFunc(radius, lat, lng) {
         console.log("Nouvelle zone ajoutée !");
         var cityCircle = new google.maps.Circle({
             strokeColor: '#FF0000',
@@ -69,16 +68,17 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     //============================================================================
 
     /**
-     * Récupère la position en temps réel de l'utilisateur
-     * La transmet au serveur
-     * Et vérifie à chaque déplacement si l'utilisateur est dans une zone
-     */
+    * Récupère la position en temps réel de l'utilisateur
+    * La transmet au serveur
+    * Et vérifie à chaque déplacement si l'utilisateur est dans une zone
+    */
     function GPSTracker() {
-
         //Vérifie que la géolocalisation est disponible
         if (navigator.geolocation) {
+            navigator.geolocation.clearWatch($rootScope.watchId);
+            console.log(navigator.geolocation);
             //Actualise à chaque déplacement
-            navigator.geolocation.watchPosition(function (position) {
+            $rootScope.watchId = navigator.geolocation.watchPosition(function (position) {
                 console.log('Position utilisateur : ' + position.coords.latitude,  position.coords.longitude);
 
                 //Envoie la position au serveur
@@ -92,7 +92,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
                 map.setCenter(myLatLng);
 
                 //Stock les coordonnées dans une var globale
-                myLatLngGlobal = myLatLng;
+                $scope.myLatLngGlobal = myLatLng;
 
                 //Vérifie si l'utilisateur est dans une zone (si les zones sont disponibles)
                 if(circlesData) {
@@ -112,7 +112,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     /**
      * Ecoute le broadcast sur 'areas' et affiche les zones
      */
-    $rootScope.$on('areas', function (event, data) {
+     $rootScope.$on('areas', function (event, data) {
 
         console.log("Nombre d'areas : "+data.length);
         for(var i = 0; i < data.length; i++) {
@@ -127,15 +127,15 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         circlesData = data;
 
         //Vérifie sur l'utilisation n'est pas déjà dans une zone, si sa position est disponible
-        if(myLatLngGlobal) {
-            checkIfIn(myLatLngGlobal);
+        if($scope.myLatLngGlobal) {
+            checkIfIn($scope.myLatLngGlobal);
         }
     });
 
     /**
      * Récupère les informations du formulaire et les envoie au serveur
      */
-    function sendAnswer() {
+     function sendAnswer() {
         //Text aera
         if($scope.answer) {
             console.log("Answer, text area : "+$scope.answer);
@@ -156,7 +156,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     /**
      * Demande un indice
      */
-    function askClue() {
+     function askClue() {
         socketFactory.askClue();
 
         //TODO afficher la réponse
@@ -175,7 +175,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      * @param lon_b
      * @returns {number}
      */
-    function getDistance(lat_a, lon_a, lat_b, lon_b)  {
+     function getDistance(lat_a, lon_a, lat_b, lon_b)  {
         var a = Math.PI / 180;
         var lat1 = lat_a * a;
         var lat2 = lat_b * a;
@@ -195,7 +195,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      * Vérifie pour toutes les zones si l'utilisateur est dans l'une d'elles
      * @param myLatLng
      */
-    function checkIfIn(myLatLng) {
+     function checkIfIn(myLatLng) {
         for(var i = 0; i < circlesData.length; i++) {
 
             //Vérifie que les informations ne sont pas nulles
@@ -222,17 +222,17 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     /**
      * Permet d'afficher l'image de l'enigme en plein écran
      */
-    $('#Fullscreen').css('height', $(document).outerWidth() + 'px');
-    $('#img-enigma').click(function () {
+     $('#Fullscreen').css('height', $(document).outerWidth() + 'px');
+     $('#img-enigma').click(function () {
         var src = $(this).attr('src'); //get the source attribute of the clicked image
         $('#Fullscreen img').attr('src', src); //assign it to the tag for your fullscreen div
         $('#Fullscreen').fadeIn();
     });
-    $('#Fullscreen').click(function () {
+     $('#Fullscreen').click(function () {
         $(this).fadeOut(); //this will hide the fullscreen div if you click away from the image.
     });
 
-});
+ });
 
 
 
