@@ -19,6 +19,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     //======                        Google map                              ======
     //============================================================================
 
+    //TODO zone pas à tout les coups
     /**
      * Initialise la google map
      */
@@ -145,14 +146,21 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
         //File (photo)
         var file = document.forms['form']['photoAnswer'].files[0];
         if(file) {
-            console.log("Answer, file : "+file); //TODO réussir à récupérer la photo
+            console.log("Answer, file : "+file); //TODO réussir à récupérer la photo ?
             console.log(window.URL.createObjectURL(file));
-
         }
 
-        //Envoie au serveur la réponse
-        socketFactory.sendAnswer($scope.answer, file);
-        //TODO Vérifier la réponse du serveur et informer l'utilisateur
+        if($scope.answer || file) {
+            //Envoie au serveur la réponse
+            socketFactory.sendAnswer($scope.answer, file);
+            $scope.answer = "";
+
+            $('#enigmaModal').modal('hide');
+            $('#enigmaModal-answer').modal('show');
+            $scope.noAnswer = "";
+        } else {
+            $scope.noAnswer = "Veuillez compléter au moins un champ"
+        }
     }
 
     /**
@@ -242,7 +250,8 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
                 //Vérifie si l'utilisateur est dans la zone
                 if (distance < ( parseFloat(circlesData[i].radius) / 1000)) {
                     console.log("Vous etes dans la zone");
-                    //TODO lancer l'enigme
+
+                    //Lance l'enigme
                     socketFactory.getEnigme(circlesData[i]._id);
                 }
             }
@@ -272,8 +281,11 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      * Effacer bonne ou mauvaise réponse
      */
     function onCloseModal() {
-        $scope.reponseEnigma = "";
-        $scope.$apply();
+
+        //Delai pour éviter une animation de chargement furtive à la fermeture
+        setTimeout(function() {
+            $scope.reponseEnigma = "";
+        }, 500);
     }
 });
 
