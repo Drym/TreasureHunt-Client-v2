@@ -40,10 +40,14 @@ div#map {
     height: calc(100vh - 100px);
 }
 
+.container {
+    position: relative;
+}
+
 #modalButton {
     padding: 0px;
     position: absolute;
-    bottom: 55px;
+    bottom: 30px;
     left: 30px;
     border-radius: 100px;
     width: 45px;
