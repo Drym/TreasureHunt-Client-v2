@@ -3,7 +3,7 @@
         <div id="map"></div>
     </div>
 </div>
-<button data-toggle="modal" data-target="#enigmaModal" id="modalButton" type="button" class="btn"></button>
+<button id="modalButton" type="button" class="btn" ng-click="openEnigma()"></button>
 <div id="Fullscreen">
     <img src="" alt="" />
 </div>
@@ -75,11 +75,11 @@
                         <div class="loader" ng-show="reponseEnigma != 'ok' && reponseEnigma != 'ko'"></div>
                         <div class="text-success col-xs-12 text-center" ng-show="reponseEnigma == 'ok'">
                             <p>Bonne réponse !</p>
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal-answer" ng-click="onCloseModal()"> Fermer </button>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal-answer" ng-click="onCloseModal()">Passer à la prochaine enigme</button>
                         </div>
                         <div class="text-danger col-xs-12 text-center" ng-show="reponseEnigma == 'ko'">
                             <p>Mauvaise réponse !</p>
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal-answer" ng-click="onCloseModal()"> Fermer </button>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal-answer" ng-click="onCloseModal()">Réessayer</button>
                         </div>
                    </div>
                 </div>

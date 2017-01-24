@@ -3,13 +3,16 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     //Variables globales
     var marker;
     var circlesData;
+    var loadingEnigmaAnswer = false;
     $scope.myLatLngGlobal;
     $scope.enigma = {'title': "", 'text' : "", 'photo' : ""};
+    $scope.reponseEnigma = "";
 
     //$scope functions
     $scope.sendAnswer = sendAnswer;
     $scope.askClue = askClue;
     $scope.onCloseModal = onCloseModal;
+    $scope.openEnigma = openEnigma;
 
     //Fonctions appelées au lancement
     googleMapInit();
@@ -156,7 +159,9 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
             $scope.answer = "";
 
             $('#enigmaModal').modal('hide');
+            $scope.loadingEnigmaAnswer = true;
             $('#enigmaModal-answer').modal('show');
+
             $scope.noAnswer = "";
         } else {
             $scope.noAnswer = "Veuillez compléter au moins un champ"
@@ -168,6 +173,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      */
     $rootScope.$on('response-enigma', function (event, data) {
         $scope.reponseEnigma = data;
+
         $scope.$apply();
         if(data == 'ok') {
             console.log("Bonne réponse");
@@ -282,10 +288,24 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
      */
     function onCloseModal() {
 
+        if($scope.loadingEnigmaAnswer && $scope.reponseEnigma != "") {
+            $scope.loadingEnigmaAnswer = false;
+        }
+
         //Delai pour éviter une animation de chargement furtive à la fermeture
-        setTimeout(function() {
-            $scope.reponseEnigma = "";
-        }, 500);
+        if(!$scope.loadingEnigmaAnswer) {
+            setTimeout(function () {
+                $scope.reponseEnigma = "";
+            }, 500);
+        }
+    }
+
+    function openEnigma() {
+        if(!$scope.loadingEnigmaAnswer) {
+            $('#enigmaModal').modal('show');
+        } else {
+            $('#enigmaModal-answer').modal('show');
+        }
     }
 });
 
