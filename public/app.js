@@ -23,8 +23,15 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
 		controller : 'thirdCtrl'
 	}
 
+	var forthPageState = {
+		name : 'forthPageState',
+		url : '/forth',
+		templateUrl : 'view/forthPage.html'
+	}
+
 	$stateProvider.state(firstPageState);
 	$stateProvider.state(secondPageState);
 	$stateProvider.state(thirdPageState);
+    $stateProvider.state(forthPageState);
 	$urlRouterProvider.otherwise('/');
 })

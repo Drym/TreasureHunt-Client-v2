@@ -79,6 +79,14 @@ img#map-icon {
     a.navbar-brand {
         display: none;
     }
+
+    .page-header {
+        margin-top: 0px;
+    }
+
+    .page-header h3 {
+        margin-top: 0px;
+    }
 }
 
 .icon-navbar {
