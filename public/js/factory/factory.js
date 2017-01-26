@@ -6,8 +6,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.teamId = localStorageService.get('teamId');
 	socketFactory.name = localStorageService.get('name');
 
-
-	// var socket = io('http://10.212.99.100:8080');
+	//var socket = io('http://10.212.99.100:8080');
     var socket = io('https://treasure-hunt-pns.herokuapp.com');
 
 	/**
