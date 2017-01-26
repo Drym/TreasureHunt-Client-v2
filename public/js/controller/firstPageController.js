@@ -11,6 +11,8 @@ app.controller("firstCtrl", function($scope, socketFactory, $rootScope){
      */
 	function submitFunc() {
 		//console.log($scope.pseudo, $scope.team);
-		socketFactory.sendNameTeam($scope.pseudo, $scope.team);
+		if($scope.pseudo &&  $scope.team) {
+			socketFactory.sendNameTeam($scope.pseudo, $scope.team);
+		}
 	}
 });
