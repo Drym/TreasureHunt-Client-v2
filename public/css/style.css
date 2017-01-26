@@ -2,17 +2,10 @@
 .messages {
     padding-right: 10px;
     height: calc(100vh - 150px);
+    width: 100%;
     overflow-y: auto;
 }
 
-.message {
-    margin-bottom: 5px;
-    margin-right: 5px;
-}
-
-.sent {
-    text-align: right;
-}
 
 .message-input {
     display: inline;
@@ -31,24 +24,32 @@
 }
 
 .message-content {
+    max-width: 80%;
+    word-wrap: break-word;
     color: white;
     background-color: #66a3ff;
     border-radius: 5px;
-    margin-top: 5px;
     padding: 10px;
 }
 
-.input-container {
-    margin-top:15px;
+.sent {
+    text-align: right;
+}
+
+
+.sent .message-content {
+    text-align: left;
+    display: inline-block;
 }
 
 .received .message-content {
     background-color: #8cd98c;
 }
 
-.message-content-container {
-    margin-top: 10px;
+.input-container {
+    margin-top:15px;
 }
+
 
 /* Nav Bar */
 .navbar-brand img {

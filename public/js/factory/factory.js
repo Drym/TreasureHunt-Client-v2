@@ -7,8 +7,8 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.name = localStorageService.get('name');
 
 
-	var socket = io('http://10.212.99.100:8080');
-    //var socket = io('https://treasure-hunt-pns.herokuapp.com:8080');
+	// var socket = io('http://10.212.99.100:8080');
+    var socket = io('https://treasure-hunt-pns.herokuapp.com');
 
 	/**
 	 * Envoie le pseudo et l'équipe dans nouveau joueur
@@ -87,6 +87,9 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
      * Lorsque l'on recoit une connexion
      */
     socket.on('connexion', function(isConnected) {
+		// localStorageService.set('name', socketFactory.name);
+		// localStorageService.set('teamId', socketFactory.teamId);
+		// localStorageService.set('isConnected', socketFactory.isConnected);
         console.log("Socket on : connexion");
 		socketFactory.isConnected = isConnected;
 	})
@@ -121,6 +124,9 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 
 		if(data == "ok") { // OK ou KO
 			socketFactory.isConnected = true;
+			localStorageService.set('name', socketFactory.name);
+			localStorageService.set('teamId', socketFactory.teamId);
+			localStorageService.set('isConnected', socketFactory.isConnected);
 			$state.go('secondPageState');
 		}
 	});
@@ -141,12 +147,12 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 		$rootScope.$broadcast('responseClue',  data);
 	});
 
-	window.onbeforeunload = function(event) {
-		console.log('On before unload');
-		localStorageService.set('name', socketFactory.name);
-		localStorageService.set('teamId', socketFactory.teamId);
-		localStorageService.set('isConnected', socketFactory.isConnected);
-	}
+	// window.onbeforeunload = function(event) {
+	// 	console.log('On before unload');
+	// 	localStorageService.set('name', socketFactory.name);
+	// 	localStorageService.set('teamId', socketFactory.teamId);
+	// 	localStorageService.set('isConnected', socketFactory.isConnected);
+	// }
 
 	return socketFactory;
 });
