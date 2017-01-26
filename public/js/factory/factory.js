@@ -3,8 +3,8 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 
 	socketFactory.isConnected = localStorageService.get('isConnected');
 	socketFactory.isEnigme = false;
-	socketFactory.teamId = localStorageService.get('name');
-	socketFactory.name = localStorageService.get('teamId');
+	socketFactory.teamId = localStorageService.get('teamId');
+	socketFactory.name = localStorageService.get('name');
 
 
 

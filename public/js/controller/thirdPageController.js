@@ -12,6 +12,8 @@ app.controller("thirdCtrl", function($scope, $rootScope, socketFactory) {
 		$scope.messages.push(data.message);
 		$scope.$apply();
 		var chat = document.getElementById("messages");
-		chat.scrollTop = chat.scrollHeight;
+		if(chat) {
+			chat.scrollTop = chat.scrollHeight;
+		}
 	})
 });
