@@ -16,6 +16,7 @@
 .message-input {
     display: inline;
     width: calc(100% - 50px);
+    height: 35px;
     margin-left: 5px;
 }
 
