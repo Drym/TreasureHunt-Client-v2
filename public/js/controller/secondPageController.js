@@ -3,9 +3,11 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     //Variables globales
     var marker;
     var circlesData;
+    var areasDisplay = false;
     $scope.myLatLngGlobal;
     $scope.enigma = {'title': "", 'text' : "", 'photo' : ""};
     $scope.reponseEnigma = "";
+
 
     //$scope functions
     $scope.sendAnswer = sendAnswer;
@@ -121,21 +123,25 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      */
     $rootScope.$on('areas', function (event, data) {
 
-        console.log("Nombre d'areas : "+data.length);
-        for(var i = 0; i < data.length; i++) {
+        if(!areasDisplay) {
+            console.log("Nombre d'areas : "+data.length);
+            for(var i = 0; i < data.length; i++) {
 
-            //Vérifie que les informations ne sont pas nulles
-            if(data[i].radius && data[i].center) {
-                //console.log(parseFloat(data[i].radius), parseFloat(data[i].center.latitude), parseFloat(data[i].center.longitude));
-                addCircleFunc(parseFloat(data[i].radius), parseFloat(data[i].center.latitude), parseFloat(data[i].center.longitude));
+                //Vérifie que les informations ne sont pas nulles
+                if(data[i].radius && data[i].center) {
+                    //console.log(parseFloat(data[i].radius), parseFloat(data[i].center.latitude), parseFloat(data[i].center.longitude));
+                    addCircleFunc(parseFloat(data[i].radius), parseFloat(data[i].center.latitude), parseFloat(data[i].center.longitude));
+                }
             }
-        }
-        //Stock les données des zones dans une variables globales pour les afficher à tout moment
-        circlesData = data;
+            //Stock les données des zones dans une variables globales pour les afficher à tout moment
+            circlesData = data;
 
-        //Vérifie sur l'utilisation n'est pas déjà dans une zone, si sa position est disponible
-        if($scope.myLatLngGlobal) {
-            checkIfIn($scope.myLatLngGlobal);
+            //Vérifie sur l'utilisation n'est pas déjà dans une zone, si sa position est disponible
+            if($scope.myLatLngGlobal) {
+                checkIfIn($scope.myLatLngGlobal);
+            }
+
+            areasDisplay = true;
         }
     });
 
@@ -207,7 +213,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     /**
      * Réception d'un indice
      */
-    $rootScope.$on('response-clue', function (event, data) {
+    $rootScope.$on('responseClue', function (event, data) {
 
         $scope.responseClue = data;
         $('#indice').show();

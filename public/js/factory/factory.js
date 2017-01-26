@@ -136,9 +136,9 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	/**
 	 * Retour du résultat d'une demande d'indice
 	 */
-	socket.on('response-clue', function(data) {
-		console.log("Socket on : response-clue");
-		$rootScope.$broadcast('response-clue',  data);
+	socket.on('responseClue', function(data) {
+		console.log("Socket on : responseClue");
+		$rootScope.$broadcast('responseClue',  data);
 	});
 
 	window.onbeforeunload = function(event) {
