@@ -56,6 +56,35 @@ span.logo {
     top: -8px;
 }
 
+.navbar-toggle {
+    border: none;
+    padding: 0px;
+    opacity: 0.5;
+}
+
+.navbar-toggle.active {
+    opacity: 1;
+}
+
+.navbar-toggle:focus, .navbar-toggle:hover {
+    background-color: initial !important;
+}
+
+img#map-icon {
+    top: -2px;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    a.navbar-brand {
+        display: none;
+    }
+}
+
+.icon-navbar {
+    width: 40px;
+}
+
 /* Map */
 div#map {
    /* width: 100%; */

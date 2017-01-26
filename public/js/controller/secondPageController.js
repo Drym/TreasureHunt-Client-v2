@@ -3,7 +3,6 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     //Variables globales
     var marker;
     var circlesData;
-    var loadingEnigmaAnswer = false;
     $scope.myLatLngGlobal;
     $scope.enigma = {'title': "", 'text' : "", 'photo' : ""};
     $scope.reponseEnigma = "";
@@ -120,7 +119,7 @@ app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
     /**
      * Ecoute le broadcast sur 'areas' et affiche les zones
      */
-     $rootScope.$on('areas', function (event, data) {
+    $rootScope.$on('areas', function (event, data) {
 
         console.log("Nombre d'areas : "+data.length);
         for(var i = 0; i < data.length; i++) {
