@@ -150,7 +150,6 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      * Récupère les informations du formulaire et les envoie au serveur
      */
      function sendAnswer() {
-         //TODO clear logs
         //Text aera
         if($scope.answer) {
             console.log("Answer, text area : "+$scope.answer);
@@ -187,7 +186,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
             console.log("Bonne réponse");
             $('#indice').hide();
 
-            //TODO demander la prochaine enigme
+            //TODO demander la prochaine enigme ( a tester )
             socketFactory.getEnigme(myAreaActual);
         } else {
             console.log("Mauvaise réponse");
@@ -270,10 +269,11 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
                 if (distance < ( parseFloat(circlesData[i].radius) / 1000)) {
                     console.log("Vous etes dans la zone");
 
-                    //TODO Only Once
-                    //Lance l'enigme
-                    socketFactory.getEnigme(circlesData[i]._id);
-                    myAreaActual = circlesData[i]._id;
+                    if(myAreaActual != circlesData[i]._id) {
+                        //Lance l'enigme
+                        socketFactory.getEnigme(circlesData[i]._id);
+                        myAreaActual = circlesData[i]._id;
+                    }
                 }
             }
         }
