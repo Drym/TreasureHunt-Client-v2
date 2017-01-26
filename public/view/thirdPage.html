@@ -1,13 +1,29 @@
 <div class="chat col-xs-12">
 	<div id="messages" class="messages row">
-		<div ng-repeat="message in messages" class="message" ng-class="{received: (message.user == 'him'), sent: (message.user == myName)}">
-			{{message.user}} : {{message.content}}
+		<div ng-repeat="message in messages" class="message" ng-class="{received: (message.user != myName), sent: (message.user == myName)}">
+			<div class="message-name">{{message.user}}</div>
+			<div class="message-content-container">
+				<span class="message-content">
+					{{message.content}}
+				</span>
+			</div>
 		</div>
 	</div>
-	<div class="row chatSendPart">
+
+	<form class="form-horizontal">
+		<div class="form-group">
+			<input type="text" ng-model="myMessage" class="form-control message-input" id="exampleInputName2" placeholder="Message...">
+			<button type="submit" class="btn btn-primary" ng-click="sendMessage(myMessage); myMessage = ''">
+				<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+			</button>
+		</div>
+
+	</form>
+
+	<!-- <div class="row chatSendPart">
 		<input class="messageInput" ng-model="myMessage">
 		<button type="button" class="btn btn-primary" ng-click="sendMessage(myMessage)">
 			<span class="glyphicon glyphicon-send" aria-hidden="true"></span>
 		</button>
-	</div>
+	</div> -->
 </div>

@@ -13,13 +13,35 @@
     text-align: right;
 }
 
-.messageInput {
+.message-input {
+    display: inline;
     width: calc(100% - 50px);
     margin-left: 5px;
 }
 
 .chatSendPart {
     margin-top: 15px;
+}
+
+.message-name {
+    color: lightgrey;
+    font-size: 15px;
+}
+
+.message-content {
+    color: white;
+    background-color: #66a3ff;
+    border-radius: 5px;
+    margin-top: 5px;
+    padding: 10px;
+}
+
+.received .message-content {
+    background-color: #8cd98c;
+}
+
+.message-content-container {
+    margin-top: 10px;
 }
 
 /* Nav Bar */
