@@ -3,7 +3,7 @@
         <div id="map"></div>
     </div>
 </div>
-<button data-toggle="modal" data-target="#enigmaModal" id="modalButton" type="button" class="btn"></button>
+<button id="modalButton" type="button" class="btn" ng-click="openEnigma()"></button>
 <div id="Fullscreen">
     <img src="" alt="" />
 </div>
@@ -13,7 +13,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="onCloseModal()"><span aria-hidden="true">×</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 <h4 class="modal-title" id="myModalLabel">Enigme : {{enigma.title}}</h4>
             </div>
             <div class="modal-body">
@@ -51,15 +51,38 @@
                             <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer"/>
                         </div>
                     </div>
-                    <div class="text-success col-xs-12 text-center" ng-show="reponseEnigma == 'ok'">
-                        <p>Bonne réponse !</p>
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal" ng-click="onCloseModal()"> Fermer </button>
-                    </div>
-                    <div class="text-danger col-xs-12 text-center" ng-show="reponseEnigma == 'ko'">
-                        <p>Mauvaise réponse !</p>
-                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal" ng-click="onCloseModal()"> Fermer </button>
+                    <div class="text-danger col-xs-12 text-center" ng-show="noAnswer != ''">
+                        <p>{{noAnswer}}</p>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- waiting for confirmation modal -->
+<!-- ENIGMA -->
+<div class="modal fade" id="enigmaModal-answer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="onCloseModal()"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Traitement de la réponse...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="loader" ng-show="reponseEnigma != 'ok' && reponseEnigma != 'ko'"></div>
+                        <div class="text-success col-xs-12 text-center" ng-show="reponseEnigma == 'ok'">
+                            <p>Bonne réponse !</p>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal-answer" ng-click="onCloseModal()">Passer à la prochaine enigme</button>
+                        </div>
+                        <div class="text-danger col-xs-12 text-center" ng-show="reponseEnigma == 'ko'">
+                            <p>Mauvaise réponse !</p>
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#enigmaModal-answer" ng-click="onCloseModal()">Réessayer</button>
+                        </div>
+                   </div>
+                </div>
             </div>
         </div>
     </div>

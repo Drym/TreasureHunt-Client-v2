@@ -120,8 +120,6 @@ app.factory('socketFactory', function($rootScope, $state){
 		if(data == "ok") { // OK ou KO
 			socketFactory.isConnected = true;
 			$state.go('secondPageState');
-
-            socketFactory.askAreas();
 		}
 	});
 
