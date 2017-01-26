@@ -1,7 +1,10 @@
-var app = angular.module('myApp', ['ui.router']);
+var app = angular.module('myApp', ['ui.router', 'LocalStorageModule']);
 
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider){
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider){
 	
+	localStorageServiceProvider.setPrefix('TreasureHunt');
+	localStorageServiceProvider.setStorageType('sessionStorage');
+
 	var firstPageState = {
 		name : 'firstPageState',
 		url : '/',

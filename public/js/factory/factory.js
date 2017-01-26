@@ -1,10 +1,12 @@
-app.factory('socketFactory', function($rootScope, $state){
+app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	var socketFactory = {};
 
-	socketFactory.isConnected = false;
+	socketFactory.isConnected = localStorageService.get('isConnected');
 	socketFactory.isEnigme = false;
-	socketFactory.teamId;
-	socketFactory.name;
+	socketFactory.teamId = localStorageService.get('name');
+	socketFactory.name = localStorageService.get('teamId');
+
+
 
 	var socket = io('http://10.212.99.100:8080');
 
@@ -139,6 +141,12 @@ app.factory('socketFactory', function($rootScope, $state){
 		$rootScope.$broadcast('response-clue',  data);
 	});
 
+	window.onbeforeunload = function(event) {
+		console.log('On before unload');
+		localStorageService.set('name', socketFactory.name);
+		localStorageService.set('teamId', socketFactory.teamId);
+		localStorageService.set('isConnected', socketFactory.isConnected);
+	}
 
 	return socketFactory;
 });
