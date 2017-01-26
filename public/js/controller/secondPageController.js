@@ -4,6 +4,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     var marker;
     var circlesData;
     var areasDisplay = false;
+    var myAreaActual;
     $scope.myLatLngGlobal;
     $scope.enigma = {'title': "", 'text' : "", 'photo' : ""};
     $scope.reponseEnigma = "";
@@ -149,6 +150,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      * Récupère les informations du formulaire et les envoie au serveur
      */
      function sendAnswer() {
+         //TODO clear logs
         //Text aera
         if($scope.answer) {
             console.log("Answer, text area : "+$scope.answer);
@@ -156,13 +158,12 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         //File (photo)
         var file = document.forms['form']['photoAnswer'].files[0];
         if(file) {
-            console.log("Answer, file : "+file); //TODO réussir à récupérer la photo ?
-            console.log(window.URL.createObjectURL(file));
+            console.log("Answer, file : "+file);
         }
 
         if($scope.answer || file) {
             //Envoie au serveur la réponse
-            socketFactory.sendAnswer($scope.answer, file);
+            socketFactory.sendAnswer($scope.answer, file, $scope.enigma.id);
             $scope.answer = "";
 
             $('#enigmaModal').modal('hide');
@@ -185,6 +186,9 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         if(data == 'ok') {
             console.log("Bonne réponse");
             $('#indice').hide();
+
+            //TODO demander la prochaine enigme
+            socketFactory.getEnigme(myAreaActual);
         } else {
             console.log("Mauvaise réponse");
         }
@@ -194,7 +198,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      * Demande un indice
      */
      function askClue() {
-        socketFactory.askClue();
+        socketFactory.askClue($scope.enigma.id);
     }
 
     /**
@@ -206,6 +210,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         $scope.enigma.title = data.name;
         $scope.enigma.text = data.enigma;
         $scope.enigma.photo = data.image;
+        $scope.enigma.id = data._id;
 
         $scope.$apply();
     });
@@ -214,9 +219,10 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      * Réception d'un indice
      */
     $rootScope.$on('responseClue', function (event, data) {
-
         $scope.responseClue = data;
+        $scope.$apply();
         $('#indice').show();
+        $('#askClue').hide();
     });
 
     //============================================================================
@@ -264,8 +270,10 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
                 if (distance < ( parseFloat(circlesData[i].radius) / 1000)) {
                     console.log("Vous etes dans la zone");
 
+                    //TODO Only Once
                     //Lance l'enigme
                     socketFactory.getEnigme(circlesData[i]._id);
+                    myAreaActual = circlesData[i]._id;
                 }
             }
         }

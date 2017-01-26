@@ -6,8 +6,8 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.teamId = localStorageService.get('teamId');
 	socketFactory.name = localStorageService.get('name');
 
-	//var socket = io('http://10.212.99.100:8080');
-    var socket = io('https://treasure-hunt-pns.herokuapp.com');
+	var socket = io('http://10.212.99.100:8080');
+    //var socket = io('https://treasure-hunt-pns.herokuapp.com');
 
 	/**
 	 * Envoie le pseudo et l'équipe dans nouveau joueur
@@ -36,12 +36,11 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
      * @param answer
      * @param photo
      */
-	socketFactory.sendAnswer = function(answer, photo) {
+	socketFactory.sendAnswer = function(answer, photo, enigmeId) {
 		//socketFactory.isEnigme
         console.log("Socket emit : sendAnswer");
-		socket.emit('sendAnswer', {'id': socketFactory.teamId, 'data' : {'answer' : answer, 'photo' : photo}});
+		socket.emit('sendAnswer', {'id': socketFactory.teamId, 'data' : {'enigmeId' : enigmeId, 'answer' : answer, 'photo' : photo}});
 	};
-
 
 	/**
 	* Envoie l'id de la zone dans laquelle l'utilisateur est
@@ -86,9 +85,6 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
      * Lorsque l'on recoit une connexion
      */
     socket.on('connexion', function(isConnected) {
-		// localStorageService.set('name', socketFactory.name);
-		// localStorageService.set('teamId', socketFactory.teamId);
-		// localStorageService.set('isConnected', socketFactory.isConnected);
         console.log("Socket on : connexion");
 		socketFactory.isConnected = isConnected;
 	})
