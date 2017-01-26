@@ -1,4 +1,4 @@
-app.controller("secondCtrl", function($scope, socketFactory, $rootScope) {
+app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootScope) {
 
     //Variables globales
     var marker;
