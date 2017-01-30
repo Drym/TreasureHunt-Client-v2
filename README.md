@@ -24,7 +24,7 @@
 	- Blablabla...
 - Points faibles :
 	- Peu de tests 
-	- Pas de certificat et clés de cryptage
+	- Pas de certificat ni de clé de cryptage
 
 ## Répartition du travail
 
@@ -34,7 +34,7 @@
 	- Aide sur la gestion de la map et des coordonnées
 	- Gestion du local storage
 - Loïc Potages :
-	(À faire)
+	- (À faire)
 - Lucas Sauvage : 
 	- Formulaire de connexion
 	- Affichage et gestion de la map
@@ -42,4 +42,4 @@
 	- Affichage des informations
 	- Gestion des coordonnées
 - Pascal Tung :
-	(À faire)
+	- (À faire)
