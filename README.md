@@ -3,9 +3,9 @@
 ## Comment installer et exécuter le client
 
 ### Prérequis
-git
-npm
-node
+- git
+- npm
+- node
 
 ### Lancement
 - Dans un terminal, installez les dépendances en lançant la commande :
