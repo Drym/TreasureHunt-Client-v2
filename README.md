@@ -8,26 +8,22 @@ npm
 node
 
 ### Lancement
-Dans un terminal, installez les dépendances en lançant la commande :
-‘‘‘
-npm install
-‘‘‘
-Puis, lancez le serveur web avec la commande :
-‘‘‘
-npm start
-‘‘‘
-Ouvrez une brower et rendez-vous à l’adresse : http://localhost:3000/
+- Dans un terminal, installez les dépendances en lançant la commande :
+`npm install`
+- Puis, lancez le serveur web avec la commande :
+`npm start`
+- Ouvrez une brower et rendez-vous à l’adresse : 
+`http://localhost:3000/`
 
 ## Comment installer et exécuter le client
 
 ## Points forts et points faibles
 
 - Points forts :
-   - 
-   - 
+	- Blablabla...
 - Points faibles :
-   - Peu de tests 
-   - Pas de certificat et clés de cryptage
+	- Peu de tests 
+	- Pas de certificat et clés de cryptage
 
 ## Répartition du travail
 
