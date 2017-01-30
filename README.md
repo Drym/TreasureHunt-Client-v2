@@ -6,6 +6,7 @@
 - git
 - npm
 - node
+- bower
 
 ### Lancement
 - Dans un terminal, installez les dépendances en lançant la commande :
