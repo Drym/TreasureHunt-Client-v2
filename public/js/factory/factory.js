@@ -9,6 +9,8 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	//var socket = io('http://localhost:8080');
     var socket = io('https://treasure-hunt-pns.herokuapp.com');
 
+    var answerSent = false;
+
 	/**
 	 * Envoie le pseudo et l'équipe dans nouveau joueur
 	 * @param name
@@ -41,6 +43,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 		//socketFactory.isEnigme
         console.log("Socket emit : sendAnswer");
 		socket.emit('sendAnswer', {'id': socketFactory.teamId, 'data' : {'enigmeId' : enigmeId, 'answer' : answer, 'photo' : photo}});
+        answerSent = true;
 	};
 
 	/**
@@ -105,7 +108,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socket.on('enigmaRequest', function(data) {
         console.log("Socket on : enigme");
 		socketFactory.isEnigme = true;
-		console.log('enigme : ' + JSON.stringify(data));
+		//console.log('enigme : ' + JSON.stringify(data));
 
         $rootScope.$broadcast('enigme',  JSON.parse(JSON.stringify(data)));
 	});
@@ -142,7 +145,8 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
      */
     socket.on('response-enigma', function(data) {
         console.log("Socket on : response-enigma"); // ok ou ko
-        $rootScope.$broadcast('response-enigma',  data);
+        $rootScope.$broadcast('response-enigma', data, answerSent);
+        answerSent = false;
     });
 
 	/**
@@ -163,7 +167,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
      * Retour du score
      */
     socket.on('responseScore', function(data) {
-        console.log("Socket on : responseScore");
+        console.log("Socket on : responseScore "+data);
         $rootScope.$broadcast('responseScore',  data);
     });
 

@@ -194,18 +194,22 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     /**
      * Vérifie la réponse de l'enigme
      */
-    $rootScope.$on('response-enigma', function (event, data) {
-        $scope.reponseEnigma = data;
+    $rootScope.$on('response-enigma', function (event, data, answerSent) {
+        if (answerSent) {
 
-        $scope.$apply();
-        if(data == 'ok') {
-            console.log("Bonne réponse");
-            $('#indice').hide();
+            $scope.reponseEnigma = data;
+            $scope.$apply();
+            if (data == 'ok') {
+                console.log("Bonne réponse");
+                $('#indice').hide();
 
-            //TODO demander la prochaine enigme ( a tester )
-            socketFactory.getEnigme(myAreaActual);
+                //TODO demander la prochaine enigme ( a tester )
+                socketFactory.getEnigme(myAreaActual);
+            } else {
+                console.log("Mauvaise réponse");
+            }
         } else {
-            console.log("Mauvaise réponse");
+            socketFactory.getEnigme(myAreaActual);
         }
     });
 
@@ -245,7 +249,6 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      */
     $rootScope.$on('responseScore', function (event, data) {
         $scope.responseScore = data;
-        console.log(data);
         $scope.$apply();
     });
 

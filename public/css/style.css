@@ -127,6 +127,18 @@ div#map {
 
 }
 
+div#score {
+    position: absolute;
+    background-color: #009fff;
+    width: 45px;
+    left: 90px;
+    height: 45px;
+    border-radius: 100px;
+    padding: 12px 0px;
+    font-size: 15px;
+    bottom: 30px;
+    color: #fff;
+}
 
 #modalButton:active:focus, #modalButton:focus {
     outline: none;
