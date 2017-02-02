@@ -24,7 +24,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     //======                        Google map                              ======
     //============================================================================
 
-    //TODO zone pas à tout les coups
+    //TODO zone pas à tout les coups ?
     /**
      * Initialise la google map
      */
@@ -33,7 +33,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
 
         map = new google.maps.Map(document.getElementById('map'), {
             center: myLatLng,
-            zoom: 8
+            zoom: 14
         });
 
         marker = new google.maps.Marker({
@@ -158,9 +158,23 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         var file = document.forms['form']['photoAnswer'].files[0];
         if(file) {
             console.log("Answer, file : "+file);
-        }
+            var fr = new FileReader();
+            fr.onload = function () {
 
-        if($scope.answer || file) {
+                //Envoie au serveur la réponse
+                socketFactory.sendAnswer($scope.answer, fr.result, $scope.enigma.id);
+                $scope.answer = "";
+
+                $('#enigmaModal').modal('hide');
+                $scope.loadingEnigmaAnswer = true;
+                $('#enigmaModal-answer').modal('show');
+
+                $scope.noAnswer = "";
+
+            };
+            fr.readAsDataURL(file);
+        }
+        else if($scope.answer) {
             //Envoie au serveur la réponse
             socketFactory.sendAnswer($scope.answer, file, $scope.enigma.id);
             $scope.answer = "";
