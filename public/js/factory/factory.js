@@ -19,6 +19,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	    socketFactory.teamId = team;
 	    socketFactory.name = name;
 		socket.emit('newUser', {'name' : name, 'team' : team});
+		socketFactory.askScore();
 	};
 
 	/**
