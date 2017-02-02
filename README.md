@@ -13,15 +13,14 @@
 `npm install`
 - Puis, lancez le serveur web avec la commande :
 `npm start`
-- Ouvrez une brower et rendez-vous à l’adresse : 
+- Ouvrez un browser et rendez-vous à l’adresse : 
 `http://localhost:3000/`
-
-## Comment installer et exécuter le client
 
 ## Points forts et points faibles
 
 - Points forts :
-	- Blablabla...
+	- Serveur hébèrgé
+	- 
 - Points faibles :
 	- Peu de tests 
 	- Pas de certificat ni de clé de cryptage
