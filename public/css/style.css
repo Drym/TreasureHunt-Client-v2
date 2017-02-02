@@ -43,6 +43,7 @@
 }
 
 .received .message-content {
+    display: inline-block;
     background-color: #8cd98c;
 }
 
