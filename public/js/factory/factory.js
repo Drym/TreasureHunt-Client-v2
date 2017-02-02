@@ -116,6 +116,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
      */
 	socket.on('response', function(data) { //TODO changer la clef 'response' ?
         console.log("Socket on : response (après connexion)	");
+        console.log("rooms : " + socket.rooms);
 
 		if(data == "ok") { // OK ou KO
 			socketFactory.isConnected = true;
