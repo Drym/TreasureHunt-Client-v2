@@ -58,6 +58,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.askClue = function(enigmeId){
         console.log("Socket emit : askClue");
 		socket.emit('askClue', {'id' : socketFactory.teamId, 'data' : {'enigmeId' : enigmeId}});
+        //TODO faire un truc quand tableau vide d'enigmes
 	}
 
     /**
@@ -75,6 +76,14 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
         console.log("Socket emit : sendMessage");
         socket.emit('newMessage', {'id' : socketFactory.teamId, 'name' : socketFactory, 'message' : message});
     }
+
+	/**
+	 * Demande le score
+	 */
+	socketFactory.askScore = function(){
+		console.log("Socket emit : askScore");
+		socket.emit('askScore', {'id' : socketFactory.teamId});
+	}
 
     socket.on('newMessage', function(message) {
         console.log("Socket on : newMessage");
@@ -149,6 +158,21 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	// 	localStorageService.set('teamId', socketFactory.teamId);
 	// 	localStorageService.set('isConnected', socketFactory.isConnected);
 	// }
+    /**
+     * Retour du score
+     */
+    socket.on('responseScore', function(data) {
+        console.log("Socket on : responseScore");
+        $rootScope.$broadcast('responseScore',  data);
+    });
+
+    /**
+     * Quand il n'y a plus d'enigme
+     */
+    socket.on('noEnigma', function(data) {
+        console.log("Socket on : noEnigma");
+        $rootScope.$broadcast('noEnigma');
+    });
 
 	return socketFactory;
 });

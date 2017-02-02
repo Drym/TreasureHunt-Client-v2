@@ -4,6 +4,8 @@
     </div>
 </div>
 <button id="modalButton" type="button" class="btn" ng-click="openEnigma()"></button>
+<div id="score">{{responseScore}}</div>
+<button type="button" class="btn" ng-click="askScore()">Coucou</button>
 <div id="Fullscreen">
     <img src="" alt="" />
 </div>
@@ -23,7 +25,9 @@
                             <div ng-if="enigma.text">{{enigma.text}}</div>
                             <div ng-if="!enigma.text" class="text-center">Pas encore d'énigmes !</div>
                         </p>
-                        <img id="img-enigma" class="img-responsive center-block" ng-src="{{enigma.photo}}"/>
+                        <span ng-if="enigma.photo">
+                            <img id="img-enigma" class="img-responsive center-block" ng-src="{{enigma.photo}}"/>
+                        </span>
                     </div>
                     <div class="col-xs-12">
                         <a id="askClue" href="" ng-click="askClue()" class="btn btn-default" style="margin-top: 10px">Demander un indice</a>

@@ -15,6 +15,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     $scope.askClue = askClue;
     $scope.onCloseModal = onCloseModal;
     $scope.openEnigma = openEnigma;
+    $scope.askScore = function() {socketFactory.askScore();};
 
     //Fonctions appelées au lancement
     googleMapInit();
@@ -170,9 +171,10 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
                 $('#enigmaModal-answer').modal('show');
 
                 $scope.noAnswer = "";
-
             };
             fr.readAsDataURL(file);
+
+            document.getElementById("photoAnswer").value = "";
         }
         else if($scope.answer) {
             //Envoie au serveur la réponse
@@ -236,6 +238,26 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         $scope.$apply();
         $('#indice').show();
         $('#askClue').hide();
+    });
+
+    /**
+     * Réception d'un score
+     */
+    $rootScope.$on('responseScore', function (event, data) {
+        $scope.responseScore = data;
+        console.log(data);
+        $scope.$apply();
+    });
+
+    /**
+     * Réception plus d'enigmes
+     */
+    $rootScope.$on('noEnigma', function (event, data) {
+        $scope.enigma.title = "Plus d'énigmes";
+        $scope.enigma.text = "Allez dans une autre zone";
+        $scope.enigma.photo = "";
+
+        $scope.$apply();
     });
 
     //============================================================================
