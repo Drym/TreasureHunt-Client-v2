@@ -1,5 +1,4 @@
 app.factory('socketFactory', function($rootScope, $state, localStorageService){
-	var socketFactory = {};
 
 	socketFactory.isConnected = localStorageService.get('isConnected');
 	socketFactory.isEnigme = false;
@@ -12,6 +11,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
     var socket = io('https://treasure-hunt-pns.herokuapp.com');
 
     var answerSent = false;
+    var socketFactory = {};
 
 	/**
 	 * Envoie le pseudo et l'équipe dans nouveau joueur
@@ -55,7 +55,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.getEnigme = function(areaId) {
 		console.log('Socket emit : getEnigme');
 		socket.emit('enigmaRequest', {'id': socketFactory.teamId, 'data' : {'areaId' : areaId}});
-	}
+	};
 
     /**
      * Demande un indice
@@ -64,8 +64,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.askClue = function(enigmeId){
         console.log("Socket emit : askClue");
 		socket.emit('askClue', {'id' : socketFactory.teamId, 'data' : {'enigmeId' : enigmeId}});
-        //TODO faire un truc quand tableau vide d'enigmes
-	}
+	};
 
     /**
      * Demande les zones de jeu
@@ -73,7 +72,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
     socketFactory.askAreas = function(){
         console.log("Socket emit : askAreas");
         socket.emit('areasRequest');
-    }
+    };
 
     /**
      * Demande les zones de jeu
@@ -81,7 +80,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
     socketFactory.sendMessage = function(message){
         console.log("Socket emit : sendMessage");
         socket.emit('newMessage', {'id' : socketFactory.teamId, 'name' : socketFactory, 'message' : message});
-    }
+    };
 
 	/**
 	 * Demande le score
@@ -89,8 +88,11 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.askScore = function(){
 		console.log("Socket emit : askScore");
 		socket.emit('askScore', {'id' : socketFactory.teamId});
-	}
+	};
 
+	/**
+	 * Réception d'un message du chat
+	 */
     socket.on('newMessage', function(message) {
         console.log("Socket on : newMessage");
     	$rootScope.$broadcast('newMessage', message);
@@ -102,7 +104,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
     socket.on('connexion', function(isConnected) {
         console.log("Socket on : connexion");
 		socketFactory.isConnected = isConnected;
-	})
+	});
 
     /**
      * Lorsque l'on recoit une enigme
@@ -129,7 +131,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
     /**
      * Lorsque l'on recoit la confirmation de connexion
      */
-	socket.on('response', function(data) { //TODO changer la clef 'response' ?
+	socket.on('response', function(data) {
         console.log("Socket on : response (après connexion)	");
         console.log("rooms : " + socket.rooms);
 

@@ -5,6 +5,8 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     var circlesData;
     var areasDisplay = false;
     var myAreaActual;
+
+    //Varibales $scope
     $scope.myLatLngGlobal;
     $scope.enigma = {'title': "", 'text' : "", 'photo' : ""};
     $scope.reponseEnigma = "";
@@ -26,7 +28,6 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     //======                        Google map                              ======
     //============================================================================
 
-    //TODO zone pas à tout les coups ?
     /**
      * Initialise la google map
      */
@@ -204,7 +205,6 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
                 console.log("Bonne réponse");
                 $('#indice').hide();
 
-                //TODO demander la prochaine enigme ( a tester )
                 socketFactory.getEnigme(myAreaActual);
             } else {
                 console.log("Mauvaise réponse");
@@ -357,6 +357,9 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         }
     }
 
+    /**
+     * Ouvre et ferme le modal d'enigme
+     */
     function openEnigma() {
         if(!$scope.loadingEnigmaAnswer) {
             $('#enigmaModal').modal('show');
