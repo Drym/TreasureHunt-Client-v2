@@ -17,6 +17,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     $scope.askClue = askClue;
     $scope.onCloseModal = onCloseModal;
     $scope.openEnigma = openEnigma;
+    $scope.disabledButton = true;
     $scope.responseScore = socketFactory.score;
     $scope.askScore = function() {socketFactory.askScore();};
 
