@@ -28,13 +28,13 @@
                             <img id="img-enigma" class="img-responsive center-block" ng-src="{{enigma.photo}}"/>
                         </span>
                     </div>
-                    <div class="col-xs-12">
+                    <div class="col-xs-12"  ng-hide="disabledButton">
                         <a id="askClue" href="" ng-click="askClue()" class="btn btn-default" style="margin-top: 10px">Demander un indice</a>
                         <span id="indice">{{responseClue}}</span>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer"  ng-hide="disabledButton">
                 <form name="form" class="form-horizontal col-xs-12">
                     <div class="form-group">
                         <label class="col-md-2 control-label pull-left">Réponse</label>
@@ -51,7 +51,7 @@
                     <br />
                     <div class="form-group">
                         <div class="col-xs-12 text-center">
-                            <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer"/>
+                            <input ng-click="sendAnswer()" type="submit" class="btn btn-default" value="Envoyer" />
                         </div>
                     </div>
                     <div class="text-danger col-xs-12 text-center" ng-show="noAnswer != ''">

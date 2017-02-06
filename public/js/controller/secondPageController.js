@@ -231,6 +231,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         $scope.enigma.text = data.enigma;
         $scope.enigma.photo = data.image;
         $scope.enigma.id = data._id;
+        $scope.disabledButton = false;
 
         $scope.$apply();
     });
@@ -261,6 +262,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
         $scope.enigma.title = "Plus d'énigmes";
         $scope.enigma.text = "Allez dans une autre zone";
         $scope.enigma.photo = "";
+        $scope.disabledButton = true;
 
         $scope.$apply();
     });
