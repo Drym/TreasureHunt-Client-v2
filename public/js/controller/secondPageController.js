@@ -205,6 +205,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
             if (data == 'ok') {
                 console.log("Bonne réponse");
                 $('#indice').hide();
+                $('#askClue').show();
 
                 socketFactory.getEnigme(myAreaActual);
             } else {
