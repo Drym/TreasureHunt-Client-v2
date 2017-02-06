@@ -2,7 +2,7 @@
 
 ## Comment installer et exécuter le client
 
-### Prérequis
+### Pré-requis
 - git
 - npm
 - node
