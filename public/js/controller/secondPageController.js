@@ -219,6 +219,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      * Demande un indice
      */
      function askClue() {
+        $scope.responseScore = $scope.responseScore - 1;
         socketFactory.askClue($scope.enigma.id);
     }
 
