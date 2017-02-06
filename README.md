@@ -18,6 +18,8 @@
 - Ouvrez un browser et rendez-vous à l’adresse : 
 `http://localhost:3000/`
 
+## Comment installer et exécuter le serveur
+
 ### Pré-requis
 - git
 - npm
