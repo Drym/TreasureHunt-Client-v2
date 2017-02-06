@@ -329,7 +329,8 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      * Permet d'afficher l'image de l'enigme en plein écran
      */
      $('#Fullscreen').css('height', $(document).outerWidth() + 'px');
-     $('#img-enigma').click(function () {
+
+    $("body").on('click', '#img-enigma', function(){
         var src = $(this).attr('src'); //get the source attribute of the clicked image
         $('#Fullscreen img').attr('src', src); //assign it to the tag for your fullscreen div
         $('#Fullscreen').fadeIn();
