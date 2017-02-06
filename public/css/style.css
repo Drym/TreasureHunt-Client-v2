@@ -2,7 +2,7 @@
 .messages {
     padding-right: 10px;
     height: calc(100vh - 150px);
-    width: 100%;
+    width: calc(100% + 10px);
     overflow-y: auto;
 }
 
