@@ -5,10 +5,11 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
 	socketFactory.isEnigme = false;
 	socketFactory.teamId = localStorageService.get('teamId');
 	socketFactory.name = localStorageService.get('name');
+    socketFactory.score = 0;
 
 	// var socket = io('http://localhost:8080');
-	var socket = io('http://10.212.99.100:8080');
-    // var socket = io('https://treasure-hunt-pns.herokuapp.com');
+	// var socket = io('http://10.212.99.100:8080');
+    var socket = io('https://treasure-hunt-pns.herokuapp.com');
 
     var answerSent = false;
 
@@ -171,6 +172,7 @@ app.factory('socketFactory', function($rootScope, $state, localStorageService){
     socket.on('responseScore', function(data) {
         console.log("Socket on : responseScore " + data);
         $rootScope.$broadcast('responseScore',  data);
+        socketFactory.score = data;
     });
 
     /**

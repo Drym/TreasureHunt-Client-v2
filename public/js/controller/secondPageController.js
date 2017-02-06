@@ -15,6 +15,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
     $scope.askClue = askClue;
     $scope.onCloseModal = onCloseModal;
     $scope.openEnigma = openEnigma;
+    $scope.responseScore = socketFactory.score;
     $scope.askScore = function() {socketFactory.askScore();};
 
     //Fonctions appelées au lancement
@@ -248,6 +249,7 @@ app.controller("secondCtrl", function($scope, socketFactory, chatFactory, $rootS
      * Réception d'un score
      */
     $rootScope.$on('responseScore', function (event, data) {
+        console.log("score received : " + data);
         $scope.responseScore = data;
         $scope.$apply();
     });
