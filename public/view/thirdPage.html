@@ -1,5 +1,5 @@
 <div class="chat col-xs-12">
-	<div id="messages" class="messages row">
+	<div id="messages" class="messages">
 		<div ng-repeat="message in chatFactory.messages" class="message" ng-class="{received: (message.user != myName), sent: (message.user == myName)}">
 			<div class="message-name">{{message.user}}</div>
 			<div class="message-content">
