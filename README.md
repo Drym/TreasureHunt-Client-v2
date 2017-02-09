@@ -29,7 +29,7 @@
 ### Lancement
 - On commence par cloner le repository (https://github.com/ktung/TreasureHunt-Server)
 - Une fois cela fait, on effectue la commande `npm install` afin d’installer toutes les dépendances du projet
-- Modifier la variable dans views/layouts/main.handlebars (Commenter ou decommenter en fonction de la ou on voit deployer le serveur L33-34).
+- Modifier la variable dans views/layouts/main.handlebars (commenter ou décommenter en fonction de là où on veut deployer le serveur L33-34).
 - Lancer le service mongo sur le serveur via la commande `sudo service mongod start`
 - Il suffit ensuite d’effectuer un `node app.js` dans le dossier afin de lancer le serveur sur le port 8080
 
