@@ -9,11 +9,11 @@
 - bower
 
 ### Lancement
-- Cloner le repository du client avec la commande :
+- Clonez le repository du client avec la commande :
 `git clone https://github.com/Drym/TreasureHunt-Client-v2.git`
-- Dans un terminal, allez dans le dossier du projet et installez les dépendances en lançant la commande :
-`npm install`
-- Puis, lancez le serveur web avec la commande :
+- Allez dans le répertoire `public/js/factory/factory.js` et ramplacez l'adresse IP heroku par :
+`http://localhost:8080`
+- Lancez la commande suivante pour installer les dépendances et pour lancer le serveur web :
 `npm start`
 - Ouvrez un browser et rendez-vous à l’adresse : 
 `http://localhost:3000/`
