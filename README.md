@@ -48,24 +48,24 @@
 
 ## Répartition du travail
 
-- Théo Donzelle :
+- Théo Donzelle : (Client)
 	- Mise en place de la connexion par des sockets avec le serveur
 	- Réalisation du chat côté client
 	- Aide sur la gestion de la map et des coordonnées
 	- Gestion du local storage
-- Loïc Potages :
+- Loïc Potages : (Serveur)
 	- Déroulement du jeu via les sockets node.js
 		- Gestion du déroulement des énigmes / zones / positions des joueurs
 	- Interfaces REST pour les élements du serveur
 		- Ajout / récuperation de zones, enigmes
 	- Modèles et interactions base de données 
-- Lucas Sauvage : 
+- Lucas Sauvage : (Client)
 	- Formulaire de connexion
 	- Affichage et gestion de la map
 	- Affichage et gestion des énigmes
 	- Affichage des informations
 	- Gestion des coordonnées
-- Pascal Tung :
+- Pascal Tung : (Serveur)
 	- Integration avec Travis
 	- Outils d’administration et de validation
 	- Gestion des scores
